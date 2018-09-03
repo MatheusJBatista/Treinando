@@ -1,0 +1,22 @@
+body{
+  background-color: #222;
+}
+.navbar-brand{
+  padding: 0px;
+}
+.noticia{
+  width: 40%;
+  float: left;
+  margin-right: 10%;
+  margin-bottom: 5%;
+}
+
+h3.noticia-textos{
+  color:#3498DB;
+}
+p.noticia-textos{
+  color:#fff;
+}
+h6.noticia-textos{
+  color:#c1bfbf;
+}
