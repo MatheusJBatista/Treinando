@@ -1,5 +1,6 @@
 body{
   background-color: #222;
+  margin-top: -5%;
 }
 .navbar-brand{
   padding: 0px;
@@ -19,4 +20,76 @@ p.noticia-textos{
 }
 h6.noticia-textos{
   color:#c1bfbf;
+}
+
+.dentro{
+  width: 100%;
+  height: 100%;
+  margin-top: 10%;
+}
+
+.baixo{
+  display: inline-block;
+}
+
+.meio{
+  color: #fff;
+  justify-content: center;
+  flex-direction: row;
+  width: 100%;
+  vertical-align: middle;
+  display: flex;
+}
+
+.frescurinha{
+  border: 1px solid #6a6c70;
+  border-radius: 2%;
+  width: 40%;
+}
+
+.form-itens{
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-bottom: 10%;
+}
+
+.login-register{
+  margin-bottom: 5%;
+}
+
+.forgotPassword{
+  color: #fff;
+}
+.forgotPassword:hover{
+  color: #fff;
+}
+
+.login-register{
+  display: flex;
+  width: 100%;
+}
+
+.loginEsquerdo{
+  text-align: center;
+  margin-right: 7%;
+  padding-right: 5%;
+  margin-top: 5%;
+}
+
+.bordaLogin{
+  border-bottom: 1px solid green;
+}
+
+.noFrescura{
+  color: white;
+}
+.noFrescura:hover{
+  color: orange;
+  text-decoration: none;
+}
+
+.registrarDireito{
+  text-align: center;
+  margin-left: 7%;
+  margin-top: 5%;
 }
