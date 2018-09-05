@@ -1,26 +1,28 @@
 <!DOCTYPE html>
 <html lang="pt-br" dir="ltr">
-  <% include include/head.ejs %>
-  <body>
+  <head>
+    <% include include/head.ejs %>
+    <link rel="stylesheet" href="/css/login.css">
+  </head>
+  <body class="body">
     <div class="container">
       <div class="dentro">
         <div class="meio">
-          <img src="img/noticia.png" alt="LogoNoticia" height="40%" width="40%">
+          <img src="img/noticia.png" alt="LogoNoticia" class="imgLogoNoticia">
         </div>
         <div class="meio">
           <div class="frescurinha">
+            <div class="meio" style="padding-bottom:4%;padding-top:2%;">
+                <div class="loginEsquerdo bordaLogin">
+                  <h3>Logar</h3>
+                </div>
+                <div class="bordaMeio"></div>
+                <div class="registrarDireito">
+                  <a href="register" class="noFrescura"><h3>Registrar</h3></a>
+                </div>
+            </div>
             <div class="form-itens">
               <form action="">
-                <div class="login-register">
-                  <div class="meio">
-                    <div class="loginEsquerdo bordaLogin">
-                      <h3>Logar</h3>
-                    </div>
-                    <div class="registrarDireito">
-                      <a href="#" class="noFrescura"><h3>Registrar</h3></a>
-                    </div>
-                  </div>
-                </div>
                 <div class="form-group">
                   <input type="text" class="form-control" name="txtUsuario" placeholder="Usuário">
                 </div>
