@@ -23,12 +23,24 @@
                 </div>
             </div>
               <div class="form-itens">
-              <form action="#">
+              <form action="/postRegister" method="post">
+                <% if(error){%>
+                  <div class="alert alert-danger">
+                    <strong>Atenção</strong>
+                    <ul>
+                      <% for(var i=0; i< error.length ; i++) {%>
+                        <li>
+                          <%= error[i].msg %>
+                        </li>
+                      <%}%>
+                    </ul>
+                  </div>
+                <%}%>
                 <div class="form-group">
-                  <input type="email" name="txtEmail" class="form-control" placeholder="E-mail">
+                  <input type="email" name="txtEmail" value="<%=dadosForm.txtEmail%>" class="form-control" placeholder="E-mail">
                 </div>
                 <div class="form-group">
-                  <input type="email" name="txtEmailConfirm" class="form-control" placeholder="Redigite o E-mail">
+                  <input type="email" name="txtEmailConfirm" value="<%=dadosForm.txtEmailConfirm%>" class="form-control" placeholder="Redigite o E-mail">
                 </div>
                 <div class="form-group">
                   <input type="password" name="txtPassword" placeholder="Crie uma Senha" class="form-control">
