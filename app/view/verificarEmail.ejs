@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pt-br" dir="ltr">
+  <head>
+    <% include include/head %>
+    <title>Verificar E-mail</title>
+  </head>
+  <body>
+    <% if(!verificarEmail) {%>
+      <script type="text/javascript">
+        window.location.replace("/");
+      </script>
+    <%} %>
+    <% include include/navbar %>
+    <div class="container">
+      <div class="text-light">
+          <h1>Verificar o e-mail</h1>
+          <% if(tipoVerificacao == "register") {%>
+            <p>Obrigado por se registrar em nosso portal de noticias</p>
+          <%}%>
+          <p>Verifique seu <a href="https://<%=entrarEmail%>">email</a> para conseguir utilizar todos os recursos</p>
+      </div>
+    </div>
+  </body>
+</html>

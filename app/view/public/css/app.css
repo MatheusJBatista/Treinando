@@ -5,6 +5,10 @@ body{
   padding: 0px;
 }
 
+.fr-toolbar{
+  border-top: 0;
+}
+
 .noticia{
   width: 40%;
   float: left;

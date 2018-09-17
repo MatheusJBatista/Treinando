@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-br" dir="ltr">
+  <head>
+    <title>Criar Notícia</title>
+    <!-- Include CSS for icons. -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Include Editor style. -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.5.1/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.5.1/css/froala_style.min.css" rel="stylesheet" type="text/css" />
+    <% include include/head %>
+  </head>
+  <body>
+    <% include include/navbar %>
+    <!-- Create a tag that we will use as the editable area. -->
+    <!-- You can use a div tag as well. -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="quickGuide" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Quick guide</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Não coloque um título dentro do conteúdo, a não ser que for utilizado sub-titulos</p>
+          <img src="img/conteudo.png" alt="conteudo" height="99%" width="99%">
+          <p>Utilize apenas o campo dedicados para o título</p>
+          <img src="img/titulo.png" alt="titulo" height="99%" width="99%">
+          <p>Se um dos críterios acimas não forem respeitados, seu post podera ser deletado</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <button type="button" name="sair" class="btn btn-danger" onclick="sair()">
+      <span class="glyphicons glyphicons-remove-sign"></span>Descartar
+    </button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#quickGuide">
+    Ajuda?
+    </button>
+    <form action="registerNoticia" method="post">
+      <% if(erro) {%>
+        <div class="col-md-3" style="margin-top:2%;">
+          <div class="alert alert-danger">
+            <strong>Atenção!</strong>
+            <ul>
+              <% for(var i=0;i < erro.length;i++) {%>
+                <li><%=erro[i].msg%></li>
+              <%}%>
+            </ul>
+          </div>
+        </div>
+      <%}%>
+      <% if(validarTituloResumo) {%>
+        <div class="col-md-3" style="margin-top:2%;">
+          <div class="alert alert-danger">
+            <strong>Atenção!</strong>
+            <ul>
+                <li><%= validarTituloResumo[0].msg%></li>
+            </ul>
+          </div>
+        </div>
+      <%}%>
+      <% if(sucesso) {%>
+        <div class="col-md-3" style="margin-top:2%;">
+          <div class="alert alert-success">
+            <strong>Sucesso!</strong>
+            <ul>
+              <% for(var i=0;i < sucesso.length;i++) {%>
+                <li><%=sucesso[i].msg%></li>
+              <%}%>
+            </ul>
+          </div>
+        </div>
+      <%}%>
+      <label for="titulo" class="text-light">Título:</label>
+      <input type="text" id="titulo" name="titulo" class="form-control" required>
+      <label for="sinopse" class="text-light">Digite uma sinopse sobre a noticia:</label>
+      <input type="text" id="sinopse" name="sinopse" class="form-control" required>
+      <label for="noticia" class="text-light">Conteudo:</label>
+      <textarea name="noticia" id="noticia"></textarea>
+      <button type="submit" name="btnSalvarNoticia" class="btn btn-primary">Salvar</button>
+    </form>
+
+    <!-- Include jQuery lib. -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+    <!-- Include Editor JS files. -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.5.1//js/froala_editor.pkgd.min.js"></script>
+
+    <!-- Initialize the editor. -->
+    <script>
+      $(function() {
+        $('textarea').froalaEditor()
+      });
+      function sair(){
+        window.location.replace("/");
+      }
+    </script>
+  </body>
+</html>
