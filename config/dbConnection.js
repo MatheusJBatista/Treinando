@@ -19,8 +19,10 @@ function query(db,dados){
   var collection = db.collection(dados.collection);
   switch (dados.operacao) {
     case "insert":
-        var senha_criptografada= crypto.createHash("md5").update(dados.query.senha).digest("hex");
-        dados.query.senha = senha_criptografada;
+        if (dados.query.senha) {
+          var senha_criptografada= crypto.createHash("md5").update(dados.query.senha).digest("hex");
+          dados.query.senha = senha_criptografada;
+        }
         collection.insertOne(dados.query,dados.callback);
         break;
     case "findAll":
@@ -40,6 +42,25 @@ function query(db,dados){
           tituloNoticia:{$eq:dados.query.tituloNoticia}
         }).toArray(dados.callback);
         break;
+    case "findById":
+        collection.find({
+          _id: ObjectId(dados.query._id)
+        }).toArray(dados.callback);
+        break;
+    case "findByKey":
+        collection.find({
+          keyEmail: dados.query.keyEmail
+        }).toArray(dados.callback);
+        break;
+    case "validarEmail":
+        collection.findOneAndUpdate(
+          {
+            keyEmail: dados.query.keyEmail,
+            emailVerificado: {$ne:true}
+          },
+          {$set:{emailVerificado: true}},
+          { rating: 1 },
+        dados.callback);break;
 
 
     default: break;

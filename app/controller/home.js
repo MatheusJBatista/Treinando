@@ -14,10 +14,6 @@ module.exports.index = function(app, req, res){
     if (err) {
       throw err;
     }
-    var titulo = result[0].tituloNoticia;
-    titulo = titulo.split(">")[3];
-    titulo = titulo.split("</strong")[0];
-    console.log(titulo);
     res.render('index',{noticias:result});
   })
 }

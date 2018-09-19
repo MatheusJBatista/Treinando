@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br" dir="ltr">
+  <head>
+    <% include include/head %>
+    <title>Verificar E-mail</title>
+  </head>
+  <body>
+    <% include include/navbar %>
+    <div class="container">
+      <div class="text-light">
+          <h1>Validação de conta</h1>
+          <% if(validar == "Já foi verificado"){%>
+            <h5>Conta já verificada</h5>
+            <p>Clique  <a href="login">aqui</a> para se logar</p>
+          <%}%>
+          <% if(validar == "Verificado com sucesso"){%>
+            <h5>Parabéns conta verificada!</h5>
+            <p>Clique  <a href="login">aqui</a> para se logar</p>
+          <%}%>
+          <% if(validar == "Validador inválido"){%>
+            <h5>Validador inválido</h5>
+            <p>Clique  <a href="register">aqui</a> para criar uma conta</p>
+          <%}%>
+          <% if(validar == "Ocorreu um erro"){%>
+            <h5>Ocorreu um erro</h5>
+          <%}%>
+      </div>
+    </div>
+  </body>
+</html>

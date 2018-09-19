@@ -1,5 +1,5 @@
 module.exports.login = function(app, req, res){
-  if (req.session.emailVerificado) {
+  if (req.session.logado) {
     res.redirect('/');
     return
   }
@@ -47,13 +47,16 @@ module.exports.postLogin = function(app, req, res){
       })
     }
     else if (result[0].emailVerificado) {
+      req.session.logado = true;
       req.session.emailVerificado = result[0].emailVerificado;
       req.session.email = result[0].email;
-      req.session.id = result[0]._id;
+      req.session._id = result[0]._id;
+      res.redirect('/');
     }
     else {
       var localEmail = result[0].email.split("@");
-      req.session.id = result[0]._id;
+      req.session.idVerificacao = result[0].keyEmail;
+      req.session.email = result[0].email;
       req.session.tipoVerificacao = "login";
       req.session.verificarEmail = true;
       req.session.entrarEmail = localEmail[1];

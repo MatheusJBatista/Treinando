@@ -1,5 +1,5 @@
 module.exports.register = function(app,req,res){
-  if (req.session.emailVerificado) {
+  if (req.session.logado) {
     res.redirect('/');
     return
   }
@@ -14,6 +14,9 @@ module.exports.postRegister = function(app,req,res){
 
   req.assert('txtEmail','E-mail é obrigatório').notEmpty();
   req.assert('txtEmailConfirm','Confirmação de e-mail é obrigatório').notEmpty();
+
+  req.assert('txtEmail','E-mail deve conter entre 11 e 150 caracteres').len(11,150);
+  req.assert('txtEmailConfirm','Confirmação deve conter entre 11 e 150 caracteres').len(11,150);
 
   req.assert('txtEmail','Digite um e-mail válido').isEmail();
   req.assert('txtEmailConfirm','Confirmação de e-mail deve ser válido').isEmail();
@@ -37,6 +40,9 @@ module.exports.postRegister = function(app,req,res){
   var uDAO = new app.app.model.UsuarioDAO();
   u._email = req.body.txtEmail;
   u._senha = req.body.txtPassword;
+  u._dataRegistro = Date().toString();
+  u._keyEmail = u.getKey();
+  console.log(u.getQuery());
   var localEmail = u._email.split("@");
 
   uDAO._conexao = conexao;
@@ -59,7 +65,7 @@ module.exports.postRegister = function(app,req,res){
         if (err) {
           throw err;
         }
-        req.session.id = result.ops._id;
+        req.session.idVerificacao = u._keyEmail;
         req.session.tipoVerificacao = "register";
         req.session.verificarEmail = true;
         req.session.email = u._email;

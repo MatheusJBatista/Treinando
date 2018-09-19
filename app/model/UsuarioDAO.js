@@ -12,10 +12,21 @@ UsuarioDAO.prototype.getDados = function () {
   }
 };
 
+UsuarioDAO.prototype.validarEmail = function(callback){
+  var dados = this.getDados();
+  dados.callback = callback;
+  this._conexao(dados);
+}
+
+UsuarioDAO.prototype.findByKey = function(callback){
+  var dados = this.getDados();
+  dados.callback = callback;
+  this._conexao(dados);
+}
+
 UsuarioDAO.prototype.findByLogin = function (callback) {
   var dados = this.getDados();
   dados.callback = callback;
-  console.log(dados);
   this._conexao(dados);
 };
 
