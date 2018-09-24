@@ -10,7 +10,9 @@ module.exports.verificarEmail = function(app,req,res){
     username:req.session.username
   });
   if (req.session.verificarEmail) {
-    app.app.controller.emailSend.confirmEmail(app,req,res,req.session.idVerificacao);
+    // Heroku config
+    app.controller.emailSend.confirmEmail(app,req,res,req.session.idVerificacao);
+    // app.app.controller.emailSend.confirmEmail(app,req,res,req.session.idVerificacao);
     req.session.destroy();
   }
 }
