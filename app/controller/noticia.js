@@ -1,11 +1,11 @@
 module.exports.noticia = function(app,req,res){
   var id = req.query.artigo;
   var conexao = app.config.dbConnection;
-  //Heroku config
-  var uDAO = new app.model.UsuarioDAO();
-  var u = new app.controller.classes.Usuario();
-  // var uDAO = new app.app.model.UsuarioDAO();
-  // var u = new app.app.controller.classes.Usuario();
+  // Heroku config
+  var n = new app.controller.classes.Noticia();
+  var nDAO = new app.model.NoticiaDAO();
+  // var n = new app.app.controller.classes.Noticia();
+  // var nDAO = new app.app.model.NoticiaDAO();
   n._id = id;
 
   nDAO._operacao = "findById";

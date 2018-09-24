@@ -8,7 +8,7 @@ module.exports.confirmEmail = function(app,req,res,id){
       to: req.session.email,
       from: 'Portal de notícias<matheusnoticiaportal@gmail.com>',
       subject: 'Confirmação de e-mail',
-      html: '<strong>Obrigado por se registar em nosso portal de notícias. Segue o link(https://matheus-noticia.herokuapp.com?validacao='+id+') para confirmar o email. <br><br><br>PS: ignorar está url -></strong>',
+      html: '<strong>Obrigado por se registar em nosso portal de notícias. Segue o <a href=https://matheus-noticia.herokuapp.com?validacao='+id+'>link</a> para confirmar o email. <br><br><br>PS: ignorar está url -></strong>',
     };
     sgMail.send(msg);
   }
