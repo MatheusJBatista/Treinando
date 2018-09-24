@@ -63,10 +63,13 @@ module.exports.registerNoticia = function(app,req,res){
     console.log(erros);
     res.render('inclusaoNoticia', {
       erro:erros,sucesso:"",
-      pagina: "inclusaoNoticia",
+      pagina: "home",
       subPagina: "",
       logado:req.session.logado,
-      validarTituloResumo:""});
+      fotoPerfil:req.session.fotoPerfil,
+      username:req.session.username,
+      validarTituloResumo:""
+    });
     return;
   }
   //Heroku config
@@ -98,11 +101,14 @@ module.exports.registerNoticia = function(app,req,res){
     var validarTituloResumo = [{msg:"Por favor inserir apenas títulos"}];
     res.render('inclusaoNoticia', {
       erro:"",
-      pagina: "inclusaoNoticia",
+      pagina: "home",
       subPagina: "",
       logado:req.session.logado,
+      fotoPerfil:req.session.fotoPerfil,
+      username:req.session.username,
       sucesso:"",
-      validarTituloResumo:validarTituloResumo});
+      validarTituloResumo:validarTituloResumo
+    });
     return;
   }
   if (validarResumo != "</h6") {
@@ -111,8 +117,11 @@ module.exports.registerNoticia = function(app,req,res){
       erro:"",
       logado:req.session.logado,
       sucesso:"",
-      pagina: "inclusaoNoticia",
+      pagina: "home",
       subPagina: "",
+      logado:req.session.logado,
+      fotoPerfil:req.session.fotoPerfil,
+      username:req.session.username,
       validarTituloResumo:validarTituloResumo});
     return;
   }
@@ -136,9 +145,11 @@ module.exports.registerNoticia = function(app,req,res){
           msg: "Notícia com título já existente"
         }],
         sucesso: "",
-        logado:req.session.logado,
-        pagina: "inclusaoNoticia",
+        pagina: "home",
         subPagina: "",
+        logado:req.session.logado,
+        fotoPerfil:req.session.fotoPerfil,
+        username:req.session.username,
         validarTituloResumo:""
       })
     }else {
@@ -151,9 +162,11 @@ module.exports.registerNoticia = function(app,req,res){
           msg: "Notícia cadastrada com sucesso"
           }],
           erro:"",
-          logado:req.session.logado,
-          pagina: "inclusaoNoticia",
+          pagina: "home",
           subPagina: "",
+          logado:req.session.logado,
+          fotoPerfil:req.session.fotoPerfil,
+          username:req.session.username,
           validarTituloResumo:""
         });
       })
