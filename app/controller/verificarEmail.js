@@ -13,9 +13,11 @@ module.exports.verificarEmail = function(app,req,res){
 module.exports.validarConta = function(app,req,res){
   var key = req.query.validacao;
   var conexao = app.config.dbConnection;
-  var u = new app.app.controller.classes.Usuario();
-
-  var uDAO = new app.app.model.UsuarioDAO();
+  //Heroku config
+  var uDAO = new app.model.UsuarioDAO();
+  var u = new app.controller.classes.Usuario();
+  // var uDAO = new app.app.model.UsuarioDAO();
+  // var u = new app.app.controller.classes.Usuario();
 
   u._keyEmail = key;
 

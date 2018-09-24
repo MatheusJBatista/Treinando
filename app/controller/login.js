@@ -25,8 +25,11 @@ module.exports.postLogin = function(app, req, res){
   }
 
   var conexao = app.config.dbConnection;
-  var uDAO = new app.app.model.UsuarioDAO();
-  var u = new app.app.controller.classes.Usuario();
+  //Heroku config
+  var uDAO = new app.model.UsuarioDAO();
+  var u = new app.controller.classes.Usuario();
+  // var uDAO = new app.app.model.UsuarioDAO();
+  // var u = new app.app.controller.classes.Usuario();
 
   u._email = post.txtUsuario;
   u._senha = post.txtSenha;

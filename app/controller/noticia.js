@@ -1,8 +1,11 @@
 module.exports.noticia = function(app,req,res){
   var id = req.query.artigo;
   var conexao = app.config.dbConnection;
-  var n = new app.app.controller.classes.Noticia();
-  var nDAO = new app.app.model.NoticiaDAO();
+  //Heroku config
+  var uDAO = new app.model.UsuarioDAO();
+  var u = new app.controller.classes.Usuario();
+  // var uDAO = new app.app.model.UsuarioDAO();
+  // var u = new app.app.controller.classes.Usuario();
   n._id = id;
 
   nDAO._operacao = "findById";
@@ -66,7 +69,9 @@ module.exports.registerNoticia = function(app,req,res){
       validarTituloResumo:""});
     return;
   }
-  var n = new app.app.controller.classes.Noticia();
+  //Heroku config
+  var n = new app.controller.classes.Noticia();
+  // var n = new app.app.controller.classes.Noticia();
   n._id = req.session.userId;
   n._autor = req.session.username;
   n._dataCriacao = Date().toString();
@@ -113,7 +118,9 @@ module.exports.registerNoticia = function(app,req,res){
   }
 
   var connection = app.config.dbConnection;
-  var nDAO = new app.app.model.NoticiaDAO();
+  // Heroku config
+  var nDAO = new app.model.NoticiaDAO();
+  // var nDAO = new app.app.model.NoticiaDAO();
 
   nDAO._conexao = connection;
   nDAO._query = n.getQuery();

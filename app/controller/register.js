@@ -35,9 +35,12 @@ module.exports.postRegister = function(app,req,res){
     return;
   }
 
-  var u = new app.app.controller.classes.Usuario();
   var conexao = app.config.dbConnection;
-  var uDAO = new app.app.model.UsuarioDAO();
+  //Heroku config
+  var uDAO = new app.model.UsuarioDAO();
+  var u = new app.controller.classes.Usuario();
+  // var uDAO = new app.app.model.UsuarioDAO();
+  // var u = new app.app.controller.classes.Usuario();
   u._email = req.body.txtEmail;
   u._senha = req.body.txtPassword;
   u._dataRegistro = Date().toString();
