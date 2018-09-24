@@ -30,7 +30,14 @@ module.exports.validarConta = function(app,req,res){
     }
     if (result.length > 0) {
       if (result[0].emailVerificado) {
-        res.render('validarConta',{validar:"Já foi verificado"})
+        res.render('validarConta',{
+          validar:"Já foi verificado",
+          pagina: "home",
+          subPagina: "",
+          logado:req.session.logado,
+          fotoPerfil:req.session.fotoPerfil,
+          username:req.session.username
+        })
       }
       else {
         uDAO._operacao = 'validarEmail';
@@ -39,16 +46,37 @@ module.exports.validarConta = function(app,req,res){
             throw err;
           }
           if (result.ok) {
-            res.render('validarConta',{validar:'Verificado com sucesso'});
+            res.render('validarConta',{
+              validar:'Verificado com sucesso',
+              pagina: "home",
+              subPagina: "",
+              logado:req.session.logado,
+              fotoPerfil:req.session.fotoPerfil,
+              username:req.session.username
+            });
           }
           else {
-            res.render('validarConta',{validar:'Ocorreu um erro'});
+            res.render('validarConta',{
+              validar:'Ocorreu um erro',
+              pagina: "home",
+              subPagina: "",
+              logado:req.session.logado,
+              fotoPerfil:req.session.fotoPerfil,
+              username:req.session.username
+            });
           }
         })
       }
     }
     else {
-      res.render('validarConta',{validar:"Validador inválido"});
+      res.render('validarConta',{
+        validar:"Validador inválido",
+        pagina: "home",
+        subPagina: "",
+        logado:req.session.logado,
+        fotoPerfil:req.session.fotoPerfil,
+        username:req.session.username
+      });
     }
   })
 }
