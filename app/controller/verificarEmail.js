@@ -2,7 +2,12 @@ module.exports.verificarEmail = function(app,req,res){
   res.render('verificarEmail',{
     verificarEmail:req.session.verificarEmail,
     entrarEmail:req.session.entrarEmail,
-    tipoVerificacao:req.session.tipoVerificacao
+    tipoVerificacao:req.session.tipoVerificacao,
+    pagina: "home",
+    subPagina: "",
+    logado:req.session.logado,
+    fotoPerfil:req.session.fotoPerfil,
+    username:req.session.username
   });
   if (req.session.verificarEmail) {
     app.app.controller.emailSend.confirmEmail(app,req,res,req.session.idVerificacao);
