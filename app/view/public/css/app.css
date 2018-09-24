@@ -1,6 +1,9 @@
 body{
   background-color: #222;
 }
+.whiteColor{
+  color:#fff
+}
 .navbar-brand{
   padding: 0px;
 }

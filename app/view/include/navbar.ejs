@@ -2,34 +2,61 @@
   <a href="/" class="navbar-brand">
     <img src="img/logo.jpg" alt="Logo" height="50px" width="50px" style="border-radius:50%; padding:0 px">
   </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a href="/" class="nav-link active">Home <span class="sr-only">(current)</span> </a>
-      </li>
-      <li class="nav-item">
-        <a href="#" class="nav-link">Chat</a>
-      </li>
-      <li class="nav-item">
-        <a href="#" class="nav-link">In-House</a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Sites Aleatórios
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a href="#" class="dropdown-item">Site inutil 1</a>
-          <a href="#" class="dropdown-item">Site inutil 2</a>
-          <a href="#" class="dropdown-item">Site inutil 3</a>
-        </div>
-      </li>
+    <div class="navbar-collapse collapse" id="collapsingNavbar">
+      <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <a href="/login" class="nav-link">Logar</a>
+          <a href="/" class="nav-link <%if(pagina == 'home'){%>active<%}%>">Home</a>
         </li>
-    </ul>
-  </div>
+        <li class="nav-item">
+          <a href="#" class="nav-link <%if(pagina == 'chat'){%>active<%}%>">Chat</a>
+        </li>
+        <li class="nav-item">
+          <a href="#" class="nav-link">In-House</a>
+        </li>
+        <li class="nav-item dropdown <%if(pagina == 'outro'){%>active<%}%>">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Sites Aleatórios
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a href="#" class="dropdown-item <%if(pagina == 'outro' && subPagina == ""){%>active<%}%>">Site inutil 1</a>
+            <a href="#" class="dropdown-item <%if(pagina == 'outro' && subPagina == ""){%>active<%}%>">Site inutil 2</a>
+            <a href="#" class="dropdown-item <%if(pagina == 'outro' && subPagina == ""){%>active<%}%>">Site inutil 3</a>
+          </div>
+        </li>
+      </ul>
+        <ul class="navbar-nav ml-auto">
+          <% if(logado) {%>
+            <% if(fotoPerfil){ %>
+              <li class="nav-item <%if(pagina == 'home'){%>active<%}%>">
+                <a href="profile" class="navbar-brand">
+                  <img src="<%= fotoPerfil %>" alt="Logo" height="50px" width="50px" style="border-radius:50%; padding:0 px">
+                </a>
+                <span class="navbar-text">
+                  <a href="profile" class="navbar-brand">
+                    <%=username%>
+                  </a>
+                </span>
+              </li>
+            <% } else {%>
+              <li class="nav-item">
+                <a href="profile" class="navbar-brand">
+                  <img src="img/profileNull.png" alt="Logo" height="50px" width="50px" style="border-radius:50%; padding:0 px">
+                </a>
+                <span class="navbar-text">
+                  <a href="profile" class="navbar-brand">
+                    <%=username%>
+                  </a>
+                </span>
+              </li>
+            <%}%>
+          <%}else{%>
+            <li class="nav-item">
+              <a href="/login" class="nav-link">Logar</a>
+            </li>
+          <%}%>
+        </ul>
+    </div>
 </nav>

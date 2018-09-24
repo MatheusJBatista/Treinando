@@ -50,6 +50,8 @@ module.exports.postLogin = function(app, req, res){
       req.session.logado = true;
       req.session.emailVerificado = result[0].emailVerificado;
       req.session.email = result[0].email;
+      req.session.username = result[0].username;
+      req.session.fotoPerfil = result[0].fotoPerfil;
       req.session._id = result[0]._id;
       res.redirect('/');
     }

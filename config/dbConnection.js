@@ -1,4 +1,5 @@
 var mongo = require("mongodb").MongoClient;
+var ObjectId = require("mongodb").ObjectId;
 var assert = require("assert");
 var crypto = require("crypto");
 
@@ -43,9 +44,9 @@ function query(db,dados){
         }).toArray(dados.callback);
         break;
     case "findById":
-        collection.find({
-          _id: ObjectId(dados.query._id)
-        }).toArray(dados.callback);
+        collection.findOne({
+          _id: new ObjectId(dados.query._id)
+        },dados.callback)//.toArray(dados.callback);
         break;
     case "findByKey":
         collection.find({

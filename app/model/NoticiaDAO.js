@@ -30,6 +30,12 @@ NoticiaDAO.prototype.findAll = function (callback) {
   this._conexao(dados);
 };
 
+NoticiaDAO.prototype.findById = function (callback) {
+  var dados = this.getDados();
+  dados.callback = callback;
+  this._conexao(dados);
+};
+
 module.exports = function(){
   return NoticiaDAO;
 };

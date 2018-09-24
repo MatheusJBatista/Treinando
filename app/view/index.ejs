@@ -6,17 +6,15 @@
     <div class="container">
       <center><img src="img/noticia.png" alt="NoticiaLogo" class="imgLogoNoticia"></center>
       <div class="row">
-        <% if(noticias.lenght > 0) {%>
+        <% if(noticias.length > 0) {%>
           <% for(var i=0; i < noticias.length;i++) {%>
             <div class="col-lg-6">
-              <a href="#">
-                <%= noticias[i].tituloNoticia %>
+              <a href="noticia?artigo=<%=noticias[i]._id%>">
+                <h3 class="noticia-textos"></h3>
+                <%-noticias[i].tituloNoticia%>
               </a>
               <p class="noticia-textos">Autor: Matheus</p>
-              <h6 class="noticia-textos">Mussum Ipsum, cacilds vidis litro abertis.
-                 Mauris nec dolor in eros commodo tempor. Aenean aliquam molestie leo, vitae iaculis nisl.
-                 A ordem dos tratores não altera o pão duris. Não sou faixa preta cumpadi,
-                 sou preto inteiris, inteiris. Copo furadis é disculpa de bebadis, arcu quam euismod magna.</h6>
+              <%- noticias[i].sinopse%>
             </div>
           <%}%>
         <%}%>

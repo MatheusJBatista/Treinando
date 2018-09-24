@@ -9,6 +9,16 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.5.1/css/froala_style.min.css" rel="stylesheet" type="text/css" />
     <% include include/head %>
   </head>
+  <style media="screen">
+    body{
+      margin-left: 3px;
+      margin-right: 3px
+    }
+    .fr-element{
+      background-color: #222;
+      border: 1px solid white
+    }
+  </style>
   <body>
     <% include include/navbar %>
     <!-- Create a tag that we will use as the editable area. -->
@@ -25,11 +35,17 @@
           </button>
         </div>
         <div class="modal-body">
-          <p>Não coloque um título dentro do conteúdo, a não ser que for utilizado sub-titulos</p>
+          <h3>O fundo da tela sempre sera com tema escuro, utilize cores certas na hora de criar seu artigo</h3>
+          <p>Utilize este icone para trocar a cor</p>
+          <img src="img/color.png" alt="conteudo" height="20%" width="20%"><hr>
+          <p>Coloque o mesmo titulo aqui:</p>
           <img src="img/conteudo.png" alt="conteudo" height="99%" width="99%">
-          <p>Utilize apenas o campo dedicados para o título</p>
+          <p>e aqui:</p>
           <img src="img/titulo.png" alt="titulo" height="99%" width="99%">
           <p>Se um dos críterios acimas não forem respeitados, seu post podera ser deletado</p>
+
+          <p>Não se esqueça de colocar um estilo nas tabelas</p>
+          <img src="img/tabela.png" alt="titulo" height="99%" width="99%">
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -44,6 +60,9 @@
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#quickGuide">
     Ajuda?
     </button>
+    <div class="container">
+
+    </div>
     <form action="registerNoticia" method="post">
       <% if(erro) {%>
         <div class="col-md-3" style="margin-top:2%;">
@@ -79,12 +98,15 @@
           </div>
         </div>
       <%}%>
-      <label for="titulo" class="text-light">Título:</label>
+      <label for="titulo" class="text-light">Título de exibição da pagina inicial:</label>
       <input type="text" id="titulo" name="titulo" class="form-control" required>
       <label for="sinopse" class="text-light">Digite uma sinopse sobre a noticia:</label>
       <input type="text" id="sinopse" name="sinopse" class="form-control" required>
       <label for="noticia" class="text-light">Conteudo:</label>
-      <textarea name="noticia" id="noticia"></textarea>
+      <div id="id="eg-dark-theme"">
+        <textarea name="noticia" id="noticia"></textarea>
+      </div>
+
       <button type="submit" name="btnSalvarNoticia" class="btn btn-primary">Salvar</button>
     </form>
 

@@ -5,4 +5,7 @@ module.exports = function(app){
   app.post('/registerNoticia', function(req,res){
     app.app.controller.noticia.registerNoticia(app,req,res);
   })
+  app.get('/noticia', function(req,res){
+    app.app.controller.noticia.noticia(app,req,res);
+  });
 }

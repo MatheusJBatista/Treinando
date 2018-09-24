@@ -14,6 +14,13 @@ module.exports.index = function(app, req, res){
     if (err) {
       throw err;
     }
-    res.render('index',{noticias:result});
+    res.render('index',{
+      noticias:result,
+      pagina: "home",
+      subPagina: "",
+      logado:req.session.logado,
+      fotoPerfil:req.session.fotoPerfil,
+      username:req.session.username
+    });
   })
 }
