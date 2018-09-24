@@ -17,12 +17,12 @@ app.use(expressSession({
 }))
 
 consign()
-  .include('/routes')
-  .then('/controller')
+  .include('app/routes')
+  .then('app/controller')
   .then('config/dbConnection.js')
-  .then('/model')
+  .then('app/model')
   .into(app);
 
-app.use(express.static('/view/public'));
+app.use(express.static('app/view/public'));
 
 module.exports = app;
