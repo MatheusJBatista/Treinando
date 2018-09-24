@@ -3,7 +3,7 @@ var ObjectId = require("mongodb").ObjectId;
 var assert = require("assert");
 var crypto = require("crypto");
 
-const url = "mongodb+srv://admin:senhadoadmin123@matheusnoticia-bwmln.mongodb.net/test?retryWrites=true";
+const url = "";
 const dbName = "portalNoticia";
 
 var conexao = function(dados){
