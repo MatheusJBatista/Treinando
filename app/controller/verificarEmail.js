@@ -11,8 +11,9 @@ module.exports.verificarEmail = function(app,req,res){
   });
   if (req.session.verificarEmail) {
     // Heroku config
-    app.controller.emailSend.confirmEmail(app,req,res,req.session.idVerificacao);
-    // app.app.controller.emailSend.confirmEmail(app,req,res,req.session.idVerificacao);
+    // app.controller.emailSend.confirmEmail(app,req,res,req.session.idVerificacao);
+    app.app.controller.emailSend.confirmEmail(app,req,res,req.session.idVerificacao);
+
     req.session.destroy();
   }
 }
@@ -21,10 +22,10 @@ module.exports.validarConta = function(app,req,res){
   var key = req.query.validacao;
   var conexao = app.config.dbConnection;
   //Heroku config
-  var uDAO = new app.model.UsuarioDAO();
-  var u = new app.controller.classes.Usuario();
-  // var uDAO = new app.app.model.UsuarioDAO();
-  // var u = new app.app.controller.classes.Usuario();
+  // var uDAO = new app.model.UsuarioDAO();
+  // var u = new app.controller.classes.Usuario();
+  var uDAO = new app.app.model.UsuarioDAO();
+  var u = new app.app.controller.classes.Usuario();
 
   u._keyEmail = key;
 

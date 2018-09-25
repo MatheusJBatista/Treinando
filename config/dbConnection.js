@@ -3,7 +3,7 @@ var ObjectId = require("mongodb").ObjectId;
 var assert = require("assert");
 var crypto = require("crypto");
 
-const url = "mongodb+srv://admin:senhadoadmin123@matheusnoticia-bwmln.mongodb.net/test?retryWrites=true";
+const url = "";
 const dbName = "portalNoticia";
 
 var conexao = function(dados){
@@ -48,10 +48,32 @@ function query(db,dados){
           _id: new ObjectId(dados.query._id)
         },dados.callback)//.toArray(dados.callback);
         break;
+    case "findAllSortAsc":
+        collection.find({}).sort({dataCriacao:-1}).toArray(dados.callback);
+        break;
     case "findByKey":
         collection.find({
           keyEmail: dados.query.keyEmail
         }).toArray(dados.callback);
+        break;
+    case "findByNick":
+        collection.find({
+          username: dados.query.username
+        }).toArray(dados.callback);
+        break;
+    case "findAndUpdateCadastro":
+        collection.findOneAndUpdate(
+          {
+            _id : new ObjectId(dados.query._id)
+          },
+            {$set:{
+              dataNascimento: dados.query.dataNascimento,
+              username: dados.query.username,
+              nome: dados.query.nome
+            }},
+            { rating: 1 },
+            dados.callback
+        )
         break;
     case "validarEmail":
         collection.findOneAndUpdate(

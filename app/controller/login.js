@@ -26,10 +26,10 @@ module.exports.postLogin = function(app, req, res){
 
   var conexao = app.config.dbConnection;
   //Heroku config
-  var uDAO = new app.model.UsuarioDAO();
-  var u = new app.controller.classes.Usuario();
-  // var uDAO = new app.app.model.UsuarioDAO();
-  // var u = new app.app.controller.classes.Usuario();
+  // var uDAO = new app.model.UsuarioDAO();
+  // var u = new app.controller.classes.Usuario();
+  var uDAO = new app.app.model.UsuarioDAO();
+  var u = new app.app.controller.classes.Usuario();
 
   u._email = post.txtUsuario;
   u._senha = post.txtSenha;
@@ -53,6 +53,8 @@ module.exports.postLogin = function(app, req, res){
       req.session.logado = true;
       req.session.emailVerificado = result[0].emailVerificado;
       req.session.email = result[0].email;
+      req.session.nome = result[0].nome;
+      req.session.dataNascimento = result[0].dataNascimento;
       req.session.username = result[0].username;
       req.session.fotoPerfil = result[0].fotoPerfil;
       req.session._id = result[0]._id;

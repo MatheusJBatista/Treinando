@@ -2,10 +2,10 @@ module.exports.noticia = function(app,req,res){
   var id = req.query.artigo;
   var conexao = app.config.dbConnection;
   // Heroku config
-  var n = new app.controller.classes.Noticia();
-  var nDAO = new app.model.NoticiaDAO();
-  // var n = new app.app.controller.classes.Noticia();
-  // var nDAO = new app.app.model.NoticiaDAO();
+  // var n = new app.controller.classes.Noticia();
+  // var nDAO = new app.model.NoticiaDAO();
+  var n = new app.app.controller.classes.Noticia();
+  var nDAO = new app.app.model.NoticiaDAO();
   n._id = id;
 
   nDAO._operacao = "findById";
@@ -46,10 +46,13 @@ module.exports.inclusaoNoticia = function(app,req,res){
   res.render('inclusaoNoticia',{
     erro:"",
     sucesso:"",
-    pagina: "inclusaoNoticia",
+    pagina: "home",
     subPagina: "",
     logado:req.session.logado,
-    validarTituloResumo:""});
+    fotoPerfil:req.session.fotoPerfil,
+    username:req.session.username,
+    validarTituloResumo:""
+  });
 }
 
 module.exports.registerNoticia = function(app,req,res){
@@ -73,8 +76,9 @@ module.exports.registerNoticia = function(app,req,res){
     return;
   }
   //Heroku config
-  var n = new app.controller.classes.Noticia();
-  // var n = new app.app.controller.classes.Noticia();
+  // var n = new app.controller.classes.Noticia();
+  var n = new app.app.controller.classes.Noticia();
+
   n._id = req.session.userId;
   n._autor = req.session.username;
   n._dataCriacao = Date().toString();
@@ -128,8 +132,8 @@ module.exports.registerNoticia = function(app,req,res){
 
   var connection = app.config.dbConnection;
   // Heroku config
-  var nDAO = new app.model.NoticiaDAO();
-  // var nDAO = new app.app.model.NoticiaDAO();
+  // var nDAO = new app.model.NoticiaDAO();
+  var nDAO = new app.app.model.NoticiaDAO();
 
   nDAO._conexao = connection;
   nDAO._query = n.getQuery();
