@@ -2,21 +2,12 @@
 <html lang="pt-br" dir="ltr">
   <head>
     <title>Criar Notícia</title>
-    <!-- Include CSS for icons. -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <!-- Include Editor style. -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.5.1/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.5.1/css/froala_style.min.css" rel="stylesheet" type="text/css" />
     <% include include/head %>
+    <script type="text/javascript" src="ckeditor/ckeditor.js"></script>
   </head>
   <style media="screen">
-    body{
-      margin-left: 3px;
-      margin-right: 3px
-    }
-    .fr-element{
+    body.cke_editable{
       background-color: #222;
-      border: 1px solid white
     }
   </style>
   <body>
@@ -54,13 +45,32 @@
     </div>
     </div>
     <!-- /Modal -->
-
-    <button type="button" name="sair" class="btn btn-danger" onclick="sair()">
-      <span class="glyphicons glyphicons-remove-sign"></span>Descartar
-    </button>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#quickGuide">
-    Ajuda?
-    </button>
+    <!-- Modal -->
+    <div class="modal fade" id="upload" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Upload arquivo</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <iframe src="imageUploader" width="100%" height="100%" style="border:0px" id="iframeUpload"></iframe>
+        </div>
+      </div>
+    </div>
+    </div>
+    <!-- /Modal -->
+      <button type="button" name="sair" class="btn btn-danger" onclick="sair()">
+        <span class="glyphicons glyphicons-remove-sign"></span>Descartar
+      </button>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#quickGuide">
+      Ajuda?
+      </button>
+      <button type="button" class="btn btn-info" data-toggle="modal" data-target="#upload" onclick="resetIframe()">
+      Upload Imagem
+      </button>
     <div class="container">
 
     </div>
@@ -104,26 +114,21 @@
       <label for="sinopse" class="text-light">Digite uma sinopse sobre a noticia:</label>
       <input type="text" id="sinopse" name="sinopse" class="form-control" required>
       <label for="noticia" class="text-light">Conteudo:</label>
-      <div id="id="eg-dark-theme"">
-        <textarea name="noticia" id="noticia"></textarea>
-      </div>
+      <textarea name="noticia" id="noticia"></textarea>
 
       <button type="submit" name="btnSalvarNoticia" class="btn btn-primary">Salvar</button>
+      <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
     </form>
-
-    <!-- Include jQuery lib. -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-
-    <!-- Include Editor JS files. -->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.5.1//js/froala_editor.pkgd.min.js"></script>
 
     <!-- Initialize the editor. -->
     <script>
-      $(function() {
-        $('textarea').froalaEditor()
-      });
-      function sair(){
-        window.location.replace("/");
+      CKEDITOR.replace( 'noticia');
+      function resetIframe(){
+        var iframe = document.getElementById('iframeUpload');
+        iframe.src = iframe.src;
       }
     </script>
   </body>

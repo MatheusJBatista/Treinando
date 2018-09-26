@@ -20,6 +20,7 @@ module.exports.noticia = function(app,req,res){
         headTitle: result.tituloNoticia.split(">")[1].split("<")[0],
         noticia:result,
         erro:"",
+        imageUpload: false,
         pagina: "home",
         subPagina: "",
         logado:req.session.logado,
@@ -31,6 +32,7 @@ module.exports.noticia = function(app,req,res){
       res.render('noticia',{
         headTitle: Erro,
         noticia: "",
+        imageUpload: false,
         erro:"Noticia não encontrada",
         pagina: "home",
         subPagina: "",
@@ -46,6 +48,7 @@ module.exports.inclusaoNoticia = function(app,req,res){
   res.render('inclusaoNoticia',{
     erro:"",
     sucesso:"",
+    imageUpload: false,
     pagina: "home",
     subPagina: "",
     logado:req.session.logado,
@@ -68,6 +71,7 @@ module.exports.registerNoticia = function(app,req,res){
       erro:erros,sucesso:"",
       pagina: "home",
       subPagina: "",
+      imageUpload: false,
       logado:req.session.logado,
       fotoPerfil:req.session.fotoPerfil,
       username:req.session.username,
@@ -107,6 +111,7 @@ module.exports.registerNoticia = function(app,req,res){
       erro:"",
       pagina: "home",
       subPagina: "",
+      imageUpload: false,
       logado:req.session.logado,
       fotoPerfil:req.session.fotoPerfil,
       username:req.session.username,
@@ -121,6 +126,7 @@ module.exports.registerNoticia = function(app,req,res){
       erro:"",
       logado:req.session.logado,
       sucesso:"",
+      imageUpload: false,
       pagina: "home",
       subPagina: "",
       logado:req.session.logado,
@@ -148,6 +154,7 @@ module.exports.registerNoticia = function(app,req,res){
         erro:[{
           msg: "Notícia com título já existente"
         }],
+        imageUpload: false,
         sucesso: "",
         pagina: "home",
         subPagina: "",
@@ -162,7 +169,9 @@ module.exports.registerNoticia = function(app,req,res){
         if (err) {
           throw err;
         }
-        res.render('inclusaoNoticia',{sucesso:[{
+        res.render('inclusaoNoticia',{
+          imageUpload: false,
+          sucesso:[{
           msg: "Notícia cadastrada com sucesso"
           }],
           erro:"",

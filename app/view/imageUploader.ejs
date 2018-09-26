@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <!-- Bootstrap core CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <!-- Bootstrap core JavaScript -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="col-sm-8" >
+      <% if(err) {%>
+        <div class="alert alert-danger">
+          <strong>Atenção!!</strong>
+          <ul>
+            <% for(var i=0;i < err.length;i++) {%>
+              <li><%= err[i].msg %></li>
+            <%}%>
+          </ul>
+        </div>
+      <%}%>
+      <% if(resultado) {%>
+        <div class="alert alert-success">
+          <p>Copie a url da imagem:</p>
+          <div class="input-group">
+            <input type="text" id="resultado" value="<%=resultado%>" class="form-control">
+            <span class="input-group-btn">
+              <button type="button" name="btnCopiar" class="btn btn-primary" onclick="copiarTexto()">
+                <span class="tooltiptext" id="myTooltip">Clique para copiar</span>
+              </button>
+            </span>
+          </div>
+          <br>
+        </div>
+      <%}else{%>
+        <br><br>
+        <form action="fileupload" method="post" enctype="multipart/form-data" class="imageUpload">
+            <input type="file" name="imageUpload" >
+            <button type="submit" class="btn btn-primary" onmouseout="outFunc()">Upload</button>
+        </form>
+      <%}%>
+    </div>
+    <script type="text/javascript">
+      function copiarTexto(){
+        var texto = document.getElementById('resultado');
+        texto.select();
+        document.execCommand("copy");
+        var tooltip = document.getElementById("myTooltip");
+        tooltip.innerHTML = "Copiado com sucesso";
+      }
+      function outFunc() {
+        var tooltip = document.getElementById("myTooltip");
+        tooltip.innerHTML = "Copy to clipboard";
+      }
+    </script>
+  </body>
+</html>
