@@ -11,7 +11,11 @@ app.set('views', 'app/view');
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(expressValidator());
-app.use(expressUpload());
+
+app.use(expressUpload({
+  createParentPath: true,
+}));
+
 app.use(expressSession({
   saveUninitialized:true,
   secret: "tem segredo nao kkk",

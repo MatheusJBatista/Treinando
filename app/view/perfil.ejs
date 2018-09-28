@@ -4,7 +4,13 @@
     <% include include/head %>
     <title></title>
   </head>
+  <style type="text/css">
+    h5.profile-font-size{
+      font-size:1.13rem
+    }
+  </style>
   <body>
+    <%var estilo=""%>
     <% if(erro) {%>
       <script type="text/javascript">
         $(window).on('load',function(){
@@ -14,44 +20,46 @@
     <%}%>
     <% include include/navbar %>
     <!-- Modal -->
-    <div class="modal fade" id="dadosComplementares" tabindex="-1" role="dialog" aria-labelledby="dadosComplementares" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Finalizar Cadastro</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            <% if(erro) {%>
-              <div class="alert alert-danger">
-                <strong>Atenção!!</strong>
-                <ul>
-                  <% for(var i=0;i < erro.length ; i++) {%>
-                    <li><%=erro[i].msg%></li>
-                  <%}%>
-                </ul>
+    <% if(!username) {%>
+      <div class="modal fade" id="dadosComplementares" tabindex="-1" role="dialog" aria-labelledby="dadosComplementares" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Finalizar Cadastro</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+                <% if(erro) {%>
+                  <div class="alert alert-danger">
+                    <strong>Atenção!!</strong>
+                    <ul>
+                      <% for(var i=0;i < erro.length ; i++) {%>
+                        <li><%=erro[i].msg%></li>
+                      <%}%>
+                    </ul>
+                  </div>
+                <%}%>
+                <form action="completarPerfil" method="post">
+                  <label for="Nome" class="text-dark">Nome completo</label>
+                  <input type="text" name="nome" id="Nome" class="form-control">
+
+                  <label for="Username" class="text-dark">Username</label>
+                  <input type="text" name="username" id="Username" class="form-control">
+
+                  <label for="Data" class="text-dark">Data de nascimento</label>
+                  <input type="date" name="data" id="Data" class="form-control">
               </div>
-            <%}%>
-            <form action="completarPerfil" method="post">
-              <label for="Nome" class="text-dark">Nome completo</label>
-              <input type="text" name="nome" id="Nome" class="form-control">
-
-              <label for="Username" class="text-dark">Username</label>
-              <input type="text" name="username" id="Username" class="form-control">
-
-              <label for="Data" class="text-dark">Data de nascimento</label>
-              <input type="date" name="data" id="Data" class="form-control">
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-            <button type="submit" class="btn btn-primary">Finalizar</button>
-            </form>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-primary">Finalizar</button>
+                </form>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    <%}%>
     <!-- /Modal -->
     <div class="container">
       <% if(sucesso) {%>
@@ -77,11 +85,96 @@
           </ul>
         </div>
       <%}else{%>
-        <div class="alert alert-warning">
+        <!-- <div class="alert alert-warning">
           <strong>Obrigado por acompanhar nosso desenvolvimento!!</strong>
           <p>Aguarde à proxima atualização do sistema</p>
-        </div>
+        </div> -->
+        <% estilo="margin-top:16px"%>
       <%}%>
+      <div class="col-sm-12" style="<%=estilo%>;background-image: url('img/profile-background.jpg');margin-bottom:16px">
+        <div class="row">
+          <div class="col-sm-4" style="border:0.1px solid #a166f9">
+            <div class="d-flex justify-content-center">
+              <img style="border-radius:100%" src="img/logo.jpg" alt="" width="150px" height="150px">
+            </div>
+          </div>
+          <div class="col-sm-8" style="padding-top:1.4%;border:0.1px solid #a166f9;border-left:0">
+              <h5 class="profile-font-size text text-white">Email: matheus_roberto_batista@hotmail.com</h5>
+              <h5 class="profile-font-size text text-white">Username: Nalfu</h5>
+              <h5 class="profile-font-size text text-white">Nome: Matheus Roberto de Jesus Batista</h5>
+              <h5 class="profile-font-size text text-white">Data de nascimento: 28/08/2000</h5>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3" style="padding-top:2.2%;border:0.1px solid #a166f9;border-top:0">
+            <div class="d-flex justify-content-center">
+              <div>
+                <a href="#" class="noFrescura">
+                  <h4 style="padding-left:7%;padding-top:2%;padding-bottom:2%;background-color:red">Comentarios</h4>
+                </a>
+                <a href="#" class="noFrescura">
+                  <h4>Rascunho</h4>
+                </a>
+                <a href="#" class="noFrescura">
+                  <h4>Minhas notícias</h4>
+                </a>
+                <a href="#" class="noFrescura">
+                  <h4>Configurações</h4>
+                </a>
+              </div>
+            </div>
+            <div class="d-flex justify-content-center">
+              <div>
+                <button class="btn btn-secundary text text-dark">Quero ser Autor</button>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-9" style="">
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="card text-white bg-dark mb-3" style="max-width: 18rem;margin-top:10px;margin-left:5px">
+                  <div class="card-header">Titulo da noticia: Arvoreiro</div>
+                  <div class="card-body">
+                    <h5 class="card-title">Comentario:</h5>
+                    <p class="card-text">Caralho esse cortador de arvore é foda.</p>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="card text-white bg-dark mb-3" style="max-width: 18rem;margin-top:10px;margin-left:5px">
+                  <div class="card-header">Titulo da noticia: Arvoreiro</div>
+                  <div class="card-body">
+                    <h5 class="card-title">Comentario:</h5>
+                    <p class="card-text">Caralho esse cortador de arvore é foda.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <nav>
+              <ul class="pagination pg-dark justify-content-end">
+                <!--Arrow left-->
+                <li class="page-item active">
+                  <a class="page-link" aria-label="Previous" href="?paginacao=">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+              </li>
+
+              <!--Numbers-->
+              <li class="page-item text text-white"><a class="page-link" href="?paginacao=">1</a></li>
+
+              <!--Arrow right-->
+              <li class="page-item active">
+                <a class="page-link" aria-label="Next" href="?paginacao=">
+                  <span aria-hidden="true">&raquo;</span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
     </div>
   </body>
 </html>

@@ -24,7 +24,7 @@
               </div>
               <%}%>
           <%}else{%>
-            <% for(var i=0; i < noticias.length;i++) {%>
+            <% for(var i=0; i < noticias.length && i < 4;i++) {%>
               <div class="col-lg-6">
                 <a href="noticia?artigo=<%=noticias[i]._id%>">
                   <h3 class="noticia-textos"></h3>
@@ -38,7 +38,7 @@
         <%}%>
           <div class="col-md-9">
             <!--Pagination dark-->
-            <% if(pagina>1) {%>
+            <% if(paginas>1) {%>
               <nav>
                 <ul class="pagination pg-dark justify-content-end">
                   <!--Arrow left-->
