@@ -2,11 +2,22 @@
 <html lang="pt-br" dir="ltr">
   <head>
     <% include include/head %>
-    <title></title>
+    <title><%=username%></title>
+    <script type="text/javascript" src="/ckeditor/ckeditor.js"></script>
   </head>
   <style type="text/css">
     h5.profile-font-size{
       font-size:1.13rem
+    }
+    .texture::after{
+      content: "";
+      width: 100%;
+      height: 100%;
+      background:dark url("/img/textura.png") repeat-x 100% 100%;
+      background-size: cover;
+    }
+    body.cke_editable{
+      background-color: #222;
     }
   </style>
   <body>
@@ -20,7 +31,7 @@
     <%}%>
     <% include include/navbar %>
     <!-- Modal -->
-    <% if(!username) {%>
+    <% if(result[0]._id == id && !username) {%>
       <div class="modal fade" id="dadosComplementares" tabindex="-1" role="dialog" aria-labelledby="dadosComplementares" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -61,6 +72,47 @@
       </div>
     <%}%>
     <!-- /Modal -->
+    <!-- modal -->
+    <div class="modal fade" id="queroSerAutor" tabindex="-1" role="dialog" aria-labelledby="queroSerAutor" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Quero ser autor</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+              <% if(erro) {%>
+                <div class="alert alert-danger">
+                  <strong>Atenção!!</strong>
+                  <ul>
+                    <% for(var i=0;i < erro.length ; i++) {%>
+                      <li><%=erro[i].msg%></li>
+                    <%}%>
+                  </ul>
+                </div>
+              <%}%>
+              <h5>Prove que você sabe fazer uma notícia</h5>
+              <p>Se conseguir, será habilitado para criar notícias</p>
+              <form action="#" method="post">
+                <label for="titulo" class="text-dark">Titulo</label>
+                <input type="text" name="titulo" id="titulo" class="form-control">
+
+                <textarea name="noticiaQuest" id="noticiaQuest"></textarea>
+                <script>
+                  CKEDITOR.replace('noticiaQuest');
+                </script>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+              <button type="submit" class="btn btn-primary">Finalizar</button>
+              </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /modal -->
     <div class="container">
       <% if(sucesso) {%>
         <div class="alert alert-success">
@@ -72,7 +124,7 @@
           </ul>
         </div>
       <%}%>
-      <% if(!username) {%>
+      <% if(result[0]._id == id && !username) {%>
         <div class="alert alert-warning">
           <strong>Atenção!!</strong>
           <ul>
@@ -85,52 +137,54 @@
           </ul>
         </div>
       <%}else{%>
-        <!-- <div class="alert alert-warning">
-          <strong>Obrigado por acompanhar nosso desenvolvimento!!</strong>
-          <p>Aguarde à proxima atualização do sistema</p>
-        </div> -->
         <% estilo="margin-top:16px"%>
       <%}%>
-      <div class="col-sm-12" style="<%=estilo%>;background-image: url('img/profile-background.jpg');margin-bottom:16px">
+      <div class="col-sm-12 texture" style="<%=estilo%>;background-image: url('/img/profile-background.jpg');margin-bottom:16px">
         <div class="row">
-          <div class="col-sm-4" style="border:0.1px solid #a166f9">
+          <div class="col-sm-4" style="border:0 solid #a166f9">
             <div class="d-flex justify-content-center">
-              <img style="border-radius:100%" src="img/logo.jpg" alt="" width="150px" height="150px">
+              <img style="border-radius:100%" src="/img/logo.jpg" alt="" width="150px" height="150px">
             </div>
           </div>
-          <div class="col-sm-8" style="padding-top:1.4%;border:0.1px solid #a166f9;border-left:0">
-              <h5 class="profile-font-size text text-white">Email: matheus_roberto_batista@hotmail.com</h5>
-              <h5 class="profile-font-size text text-white">Username: Nalfu</h5>
-              <h5 class="profile-font-size text text-white">Nome: Matheus Roberto de Jesus Batista</h5>
-              <h5 class="profile-font-size text text-white">Data de nascimento: 28/08/2000</h5>
+          <div class="col-sm-8" style="padding-top:1.4%;border:0 solid #a166f9;border-left:0">
+              <%if(result[0]._id == id){%>
+                <h5 class="profile-font-size text text-white">Email: <%=result[0].email%></h5>
+              <%}%>
+              <h5 class="profile-font-size text text-white">Username: <%=result[0].username%></h5>
+              <h5 class="profile-font-size text text-white">Nome: <%=result[0].nome%></h5>
+              <h5 class="profile-font-size text text-white">Data de nascimento: <%=result[0].dataNascimento%></h5>
           </div>
         </div>
         <div class="row">
-          <div class="col-sm-3" style="padding-top:2.2%;border:0.1px solid #a166f9;border-top:0">
+          <div class="col-sm-3" style="padding-top:2.2%;border:0 solid #a166f9;border-top:0">
             <div class="d-flex justify-content-center">
               <div>
-                <a href="#" class="noFrescura">
+                <a href="/profile/<%=username%>" class="noFrescura">
                   <h4 style="padding-left:7%;padding-top:2%;padding-bottom:2%;background-color:red">Comentarios</h4>
                 </a>
                 <a href="#" class="noFrescura">
-                  <h4>Rascunho</h4>
+                  <h4>Notícias criadas</h4>
                 </a>
-                <a href="#" class="noFrescura">
-                  <h4>Minhas notícias</h4>
-                </a>
-                <a href="#" class="noFrescura">
-                  <h4>Configurações</h4>
-                </a>
+                <%if(result[0]._id == id){%>
+                  <a href="/profile/<%=username%>/config" class="noFrescura">
+                    <h4>Configurações</h4>
+                  </a>
+                <%}%>
               </div>
             </div>
-            <div class="d-flex justify-content-center">
-              <div>
-                <button class="btn btn-secundary text text-dark">Quero ser Autor</button>
+            <%if(result[0]._id == id){%>
+              <div class="d-flex justify-content-center">
+                <div>
+                  <button class="btn btn-secundary text text-dark" data-toggle="modal" data-target="#queroSerAutor">
+                    Quero ser Autor
+                  </button>
+                </div>
               </div>
-            </div>
+            <%}%>
           </div>
           <div class="col-sm-9" style="">
             <div class="row">
+            <%if(pagina == "perfil"){%>
               <div class="col-sm-6">
                 <div class="card text-white bg-dark mb-3" style="max-width: 18rem;margin-top:10px;margin-left:5px">
                   <div class="card-header">Titulo da noticia: Arvoreiro</div>
@@ -149,29 +203,60 @@
                   </div>
                 </div>
               </div>
+            <%}else{%>
+              <div class="col-sm-4">
+                <form action="">
+                  <label for="" class="text text-white">Senha antiga:</label>
+                  <input type="password" name="senhaAntiga" value="" class="form-control">
+                  <label for="" class="text text-white">Nova senha:</label>
+                  <input type="password" name="senhaNova" value="" class="form-control">
+                  <button type="submit" class="btn btn text text-dark" name="btnSenha">Trocar senha</button>
+                </form>
+              </div>
+              <div class="col-sm-4">
+                <form action="">
+                  <label for="" class="text text-white">E-mail antigo:</label>
+                  <input type="email" name="senhaAntiga" value="" class="form-control">
+                  <label for="" class="text text-white">Novo E-mail:</label>
+                  <input type="email" name="senhaNova" value="" class="form-control">
+                  <button type="submit" class="btn btn text text-dark" name="btnEmail">Trocar email</button>
+                </form>
+              </div>
+              <div class="col-sm-4">
+                <form action="">
+                  <label for="" class="text text-white">Username antigo:</label>
+                  <input type="password" name="senhaAntiga" value="" class="form-control">
+                  <label for="" class="text text-white">Novo username:</label>
+                  <input type="password" name="senhaNova" value="" class="form-control">
+                  <button type="submit" class="btn btn text text-dark" name="btnNick">Trocar username</button>
+                </form>
+              </div>
+            <%}%>
             </div>
-            <nav>
-              <ul class="pagination pg-dark justify-content-end">
-                <!--Arrow left-->
-                <li class="page-item active">
-                  <a class="page-link" aria-label="Previous" href="?paginacao=">
-                    <span aria-hidden="true">&laquo;</span>
-                    <span class="sr-only">Previous</span>
-                  </a>
-              </li>
+            <%if(pagina == "perfil"){%>
+              <nav>
+                <ul class="pagination pg-dark justify-content-end">
+                  <!--Arrow left-->
+                  <li class="page-item active">
+                    <a class="page-link" aria-label="Previous" href="?paginacao=">
+                      <span aria-hidden="true">&laquo;</span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                  </li>
 
-              <!--Numbers-->
-              <li class="page-item text text-white"><a class="page-link" href="?paginacao=">1</a></li>
+                  <!--Numbers-->
+                  <li class="page-item text text-white"><a class="page-link" href="?paginacao=">1</a></li>
 
-              <!--Arrow right-->
-              <li class="page-item active">
-                <a class="page-link" aria-label="Next" href="?paginacao=">
-                  <span aria-hidden="true">&raquo;</span>
-                  <span class="sr-only">Next</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
+                  <!--Arrow right-->
+                  <li class="page-item active">
+                    <a class="page-link" aria-label="Next" href="?paginacao=">
+                      <span aria-hidden="true">&raquo;</span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            <%}%>
         </div>
       </div>
     </div>

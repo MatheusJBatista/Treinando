@@ -1,19 +1,101 @@
-module.exports.meuPerfil = function(app,req,res){
-  if (!req.session.logado) {
-    res.redirect('/');
-    return;
+module.exports.profile = function(app,req,res){
+  // Heroku config
+  // var uDAO = new app.model.UsuarioDAO();
+  // var u = new app.controller.classes.usuario();
+  var uDAO = new app.app.model.UsuarioDAO();
+  var u = new app.app.controller.classes.Usuario();
+  var connection = app.config.dbConnection;
+  var operacao = "";
+
+  if (req.params.profile.length == 24) {
+    u._id = req.params.profile
+    operacao = "findById";
+  }else {
+    u._username = req.params.profile;
+    operacao = "findByProfileUsername";
   }
-  res.render('perfil',{
-    pagina: "perfil",
-    erro: "",
-    sucesso: "",
-    logado:req.session.logado,
-    fotoPerfil:req.session.fotoPerfil,
-    dataNascimento:req.session.dataNascimento,
-    email:req.session.email,
-    nome:req.session.nome,
-    username:req.session.username
-  });
+  uDAO._query = u.getQuery();
+  uDAO._operacao = operacao;
+  uDAO._conexao = connection;
+
+  uDAO.findByProfile(function(err,result){
+    if (err) {
+      return console.log(err);
+    }
+    console.log(result);
+    if (result.length == 1) {
+      res.render('perfil',{
+        pagina: "perfil",
+        erro: "",
+        sucesso: "",
+        result:result,
+        logado:req.session.logado,
+        fotoPerfil:req.session.fotoPerfil,
+        dataNascimento:req.session.dataNascimento,
+        email:req.session.email,
+        nome:req.session.nome,
+        id:req.session._id,
+        username:req.session.username
+      });
+    }else {
+      res.render('profileError',{
+        pagina: "perfil",
+        logado:req.session.logado,
+        fotoPerfil:req.session.fotoPerfil,
+        dataNascimento:req.session.dataNascimento,
+        email:req.session.email,
+        nome:req.session.nome,
+        id:req.session._id,
+        username:req.session.username
+      });
+    }
+  })
+}
+
+module.exports.config = function(app,req,res){
+  // Heroku config
+  // var uDAO = new app.model.UsuarioDAO();
+  // var u = new app.controller.classes.usuario();
+  var uDAO = new app.app.model.UsuarioDAO();
+  var u = new app.app.controller.classes.Usuario();
+  var connection = app.config.dbConnection;
+  var operacao = "";
+
+  if (req.params.profile.length == 24) {
+    u._id = req.params.profile
+    operacao = "findById";
+  }else {
+    u._username = req.params.profile;
+    operacao = "findByProfileUsername";
+  }
+  uDAO._query = u.getQuery();
+  uDAO._operacao = operacao;
+  uDAO._conexao = connection;
+
+  uDAO.findByProfile(function(err,result){
+    if (err) {
+      return console.log(err);
+    }
+    console.log(result);
+    if (result[0]._id == req.session._id) {
+      res.render('perfil',{
+        pagina: "perfilConfig",
+        erro: "",
+        sucesso: "",
+        result:result,
+        logado:req.session.logado,
+        fotoPerfil:req.session.fotoPerfil,
+        dataNascimento:req.session.dataNascimento,
+        email:req.session.email,
+        nome:req.session.nome,
+        id:req.session._id,
+        username:req.session.username
+      });
+    }
+    else {
+      res.redirect('/profile/'+req.params.profile);
+    }
+  })
 }
 
 module.exports.completarPerfil = function(app,req,res){
@@ -47,6 +129,10 @@ module.exports.completarPerfil = function(app,req,res){
       sucesso: "",
       logado:req.session.logado,
       fotoPerfil:req.session.fotoPerfil,
+      dataNascimento:req.session.dataNascimento,
+      email:req.session.email,
+      nome:req.session.nome,
+      id:req.session._id,
       username:req.session.username
     });
     return;
@@ -81,6 +167,10 @@ module.exports.completarPerfil = function(app,req,res){
         sucesso: "",
         logado:req.session.logado,
         fotoPerfil:req.session.fotoPerfil,
+        dataNascimento:req.session.dataNascimento,
+        email:req.session.email,
+        nome:req.session.nome,
+        id:req.session._id,
         username:req.session.username
       });
       return
@@ -115,6 +205,10 @@ module.exports.completarPerfil = function(app,req,res){
               }],
               logado:req.session.logado,
               fotoPerfil:req.session.fotoPerfil,
+              dataNascimento:req.session.dataNascimento,
+              email:req.session.email,
+              nome:req.session.nome,
+              id:req.session._id,
               username:req.session.username
             });
 

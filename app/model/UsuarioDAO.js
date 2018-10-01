@@ -54,6 +54,12 @@ UsuarioDAO.prototype.findByNick = function (callback) {
   this._conexao(dados);
 };
 
+UsuarioDAO.prototype.findByProfile = function (callback) {
+  var dados = this.getDados();
+  dados.callback = callback;
+  this._conexao(dados);
+};
+
 UsuarioDAO.prototype.findById = function (callback) {
   var dados = this.getDados();
   dados.callback = callback;

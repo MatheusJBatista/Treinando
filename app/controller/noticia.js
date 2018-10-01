@@ -15,10 +15,10 @@ module.exports.noticia = function(app,req,res){
     if (err) {
       return console.log(err);
     }
-    if (result) {
+    if (result[0]) {
       res.render('noticia',{
-        headTitle: result.tituloNoticia.split(">")[1].split("<")[0],
-        noticia:result,
+        headTitle: result[0].tituloNoticia.split(">")[1].split("<")[0],
+        noticia:result[0],
         erro:"",
         imageUpload: false,
         pagina: "home",

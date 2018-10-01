@@ -44,12 +44,12 @@ function query(db,dados){
         }).toArray(dados.callback);
         break;
     case "findById":
-        collection.findOne({
+        collection.find({
           _id: new ObjectId(dados.query._id)
-        },dados.callback)//.toArray(dados.callback);
+        }).toArray(dados.callback);
         break;
     case "findAllSortAsc":
-        collection.find({}).sort({dataCriacao:-1}).toArray(dados.callback);
+        collection.find({}).sort({dataCriacao:1}).toArray(dados.callback);
         break;
     case "findByKey":
         collection.find({
@@ -57,6 +57,11 @@ function query(db,dados){
         }).toArray(dados.callback);
         break;
     case "findByNick":
+        collection.find({
+          username: dados.query.username
+        }).toArray(dados.callback);
+        break;
+    case "findByProfileUsername":
         collection.find({
           username: dados.query.username
         }).toArray(dados.callback);
