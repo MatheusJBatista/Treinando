@@ -7,10 +7,10 @@
   </button>
     <div class="navbar-collapse collapse" id="collapsingNavbar">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item <%if(pagina == 'home'){%>active<%}%>">
+        <li class="nav-item <%= pagina == 'home' ? 'active': ''%>">
           <a href="/" class="nav-link">Home</a>
         </li>
-        <li class="nav-item <%if(pagina == 'chat'){%>active<%}%>">
+        <li class="nav-item <%= pagina == 'chat' ? 'active': ''%>">
           <a href="#" class="nav-link">Chat</a>
         </li>
         <li class="nav-item">
@@ -21,29 +21,46 @@
           <% if(logado) {%>
             <% if(fotoPerfil){ %>
               <li class="nav-item <%if(pagina == 'perfil'){%>active<%}%>">
-                <a href="meuPerfil" class="navbar-brand">
+                <a href="/profile/<%=id%>" class="navbar-brand">
                   <img src="<%= fotoPerfil %>" alt="Logo" height="50px" width="50px" style="border-radius:50%; padding:0 px">
                 </a>
                 <span class="navbar-text">
-                  <a href="meuPerfil" class="navbar-brand">
+                  <a href="/profile/<%=id%>" class="navbar-brand">
                     <%=username%>
                   </a>
                 </span>
               </li>
             <% } else {%>
-              <li class="nav-item <%if(pagina == 'perfil'){%>active<%}%>">
-                <a href="/profile/<%=username%>" class="navbar-brand">
+              <!-- <li class="nav-item navDropItem <%= pagina == 'perfil' ? 'active' : ''%>">
+                <a href="/profile/<%=id%>" class="navbar-brand">
                   <img src="/img/profileNull.png" alt="Logo" height="50px" width="50px" style="border-radius:50%; padding:0 px">
                 </a>
-                <span class="navbar-text">
-                  <a href="meuPerfil" class="nav-brand">
+                <span class="navbar-text <%= pagina == 'perfil' ? 'active': ''%>">
+                  <a href="/profile/<%=id%>" class="nav-brand">
                     <%=username%>
                   </a>
                 </span>
+                <ul class="navbarLogOut">
+                  <a href="/profile/<%=id%>" class="navbar-brand">Sair</a>
+                </ul>
+              </li> -->
+              <li class="nav-item dropdown">
+                <a href="/profile/<%=id%>" class="navbar-brand">
+                  <img src="/img/profileNull.png" alt="Logo" height="50px" width="50px" style="border-radius:50%; padding:0 px">
+                </a>
+                <a class="nav-brand <%= pagina == 'perfil' ? 'active': ''%>" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <span class="navbar-text text-white">
+                      <%=username%>
+                  </span>
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item text-center" href="/profile/<%=id%>">Perfil</a>
+                  <a class="dropdown-item text-center" href="/logout">Sair</a>
+                </div>
               </li>
             <%}%>
           <%}else{%>
-            <li class="nav-item <%if(pagina == 'perfil'){%>active<%}%>">
+            <li class="nav-item">
               <a href="/login" class="nav-link">Logar</a>
             </li>
           <%}%>

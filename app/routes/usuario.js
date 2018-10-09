@@ -10,7 +10,7 @@ module.exports = function(app){
     app.app.controller.usuario.config(app,req,res);
   })
 
-  app.post('/completarPerfil',function(req,res){
+  app.post('/profile/:profile/completarPerfil',function(req,res){
     // Heroku config
     // app.controller.usuario.completarPerfil(app,req,res);
     app.app.controller.usuario.completarPerfil(app,req,res);

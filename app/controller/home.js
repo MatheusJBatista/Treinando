@@ -31,7 +31,8 @@ module.exports.index = function(app, req, res){
       subPagina: "",
       logado:req.session.logado,
       fotoPerfil:req.session.fotoPerfil,
-      username:req.session.username
+      username:req.session.username,
+      id:req.session._id
     });
   })
 }

@@ -1,3 +1,4 @@
+const fs = require('fs');
 module.exports.profile = function(app,req,res){
   // Heroku config
   // var uDAO = new app.model.UsuarioDAO();
@@ -22,7 +23,6 @@ module.exports.profile = function(app,req,res){
     if (err) {
       return console.log(err);
     }
-    console.log(result);
     if (result.length == 1) {
       res.render('perfil',{
         pagina: "perfil",
@@ -103,10 +103,6 @@ module.exports.completarPerfil = function(app,req,res){
     res.redirect('/');
     return;
   }
-  if (req.session.username) {
-    res.redirect('/');
-    return;
-  }
   if (req.session.vazar) {
     delete req.session.vazar
     res.redirect('meuPerfil');
@@ -114,8 +110,6 @@ module.exports.completarPerfil = function(app,req,res){
   }
   req.assert('nome', 'Nome é obrigatório').notEmpty();
   req.assert('nome', 'Nome Deve ter entre 10 e 100 caracteres').len(10,100);
-  req.assert('username', 'Username é obrigatório').notEmpty();
-  req.assert('username', 'Username Deve ter entre 4 e 15 caracteres').len(4,15);
   req.assert('data', 'Data é obrigatório').notEmpty();
   req.assert('data', 'Data invalida').isISO8601();
 
@@ -146,76 +140,51 @@ module.exports.completarPerfil = function(app,req,res){
   var uDAO = new app.app.model.UsuarioDAO();
 
   u._nomeCompleto = req.body.nome;
-  u._username = req.body.username;
   u._dataNascimento = req.body.data;
   u._id = req.session._id;
 
-  uDAO._operacao = "findByNick";
   uDAO._conexao = conexao;
   uDAO._query = u.getQuery();
 
-  uDAO.findByNick(function(err,result){
+  uDAO._operacao = "findAndUpdateCadastro";
+  uDAO.findAndUpdateCadastro(function(err,result){
     if (err) {
       return console.log(err);
     }
-    if (result.length > 0) {
-      res.render('perfil',{
-        pagina: "perfil",
-        erro: [{
-          msg:"username já existe, favor criar outro"
-        }],
-        sucesso: "",
-        logado:req.session.logado,
-        fotoPerfil:req.session.fotoPerfil,
-        dataNascimento:req.session.dataNascimento,
-        email:req.session.email,
-        nome:req.session.nome,
-        id:req.session._id,
-        username:req.session.username
-      });
-      return
-    }else {
-      uDAO._operacao = "findAndUpdateCadastro";
-      uDAO.findAndUpdateCadastro(function(err,result){
-        if (err) {
-          return console.log(err);
-        }
-        uDAO._operacao = "findById";
-        uDAO.findById(function(err,result){
-          if (err) {
-            return console.log(err);
-          }
-          if (result.nome && result.username && result.dataNascimento) {
-            req.session.logado = true;
-            req.session.emailVerificado = result.emailVerificado;
-            req.session.email = result.email;
-            req.session.nome = result.nome;
-            req.session.dataNascimento = result.dataNascimento;
-            req.session.username = result.username;
-            req.session.fotoPerfil = result.fotoPerfil;
-            req.session._id = result._id;
-            //sessao apenas para nao reenviar o formulario
-            req.session.vazar = true;
+    uDAO._operacao = "findById";
+    uDAO.findById(function(err,result){
+      if (err) {
+        return console.log(err);
+      }
+      // Heroku Config
+      // if (app.controller.imageUploader.fileupload(app,req,res)) {
+      //   console.log('Upload com sucesso');
+      // }
+      if (app.app.controller.imageUploader.fileupload(app,req,res)) {
+        console.log('Upload com sucesso');
+      }
+      // if (req.session.nome) {
+      //   fs.renameSync('./app/view/public/jogadores/'+req.session.nome+'/','./app/view/public/jogadores/'+result[0].nome+'/')
+      // }
+      // else if (!fs.existsSync('./app/view/public/jogadores/'+result[0].nome+'/')) {
+      //   fs.mkdirSync('./app/view/public/jogadores/'+result[0].nome+'/');
+      // }
+      console.log(result);
+      if (result[0].nome && result[0].username && result[0].dataNascimento) {
+        req.session.logado = true;
+        req.session.emailVerificado = result[0].emailVerificado;
+        req.session.email = result[0].email;
+        req.session.nome = result[0].nome;
+        req.session.dataNascimento = result[0].dataNascimento;
+        req.session.username = result[0].username;
+        req.session.fotoPerfil = result[0].fotoPerfil;
+        req.session._id = result[0]._id;
+        //sessao apenas para nao reenviar o formulario
+        req.session.vazar = true;
 
-            res.render('perfil',{
-              pagina: "perfil",
-              erro: "",
-              sucesso: [{
-                msg:'Atualizado com sucesso'
-              }],
-              logado:req.session.logado,
-              fotoPerfil:req.session.fotoPerfil,
-              dataNascimento:req.session.dataNascimento,
-              email:req.session.email,
-              nome:req.session.nome,
-              id:req.session._id,
-              username:req.session.username
-            });
+        res.redirect('/profile/'+req.session.username);
 
-          }
-        })
-      })
-    }
+      }
+    })
   })
-
 }

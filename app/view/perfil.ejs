@@ -31,7 +31,7 @@
     <%}%>
     <% include include/navbar %>
     <!-- Modal -->
-    <% if(result[0]._id == id && !username) {%>
+    <% if(result[0]._id == id && !nome) {%>
       <div class="modal fade" id="dadosComplementares" tabindex="-1" role="dialog" aria-labelledby="dadosComplementares" aria-hidden="true">
         <div class="modal-dialog" role="document">
           <div class="modal-content">
@@ -52,12 +52,14 @@
                     </ul>
                   </div>
                 <%}%>
-                <form action="completarPerfil" method="post">
+                <form action="/profile/<%=id%>/completarPerfil" method="post" enctype="multipart/form-data">
+                  <label for="Image" class="text-dark">Imagem de Perfil</label>
+                  <div class="">
+                    <input type="file" name="uploadPerfil" class="" id="Image">
+                  </div>
+
                   <label for="Nome" class="text-dark">Nome completo</label>
                   <input type="text" name="nome" id="Nome" class="form-control">
-
-                  <label for="Username" class="text-dark">Username</label>
-                  <input type="text" name="username" id="Username" class="form-control">
 
                   <label for="Data" class="text-dark">Data de nascimento</label>
                   <input type="date" name="data" id="Data" class="form-control">
@@ -124,7 +126,7 @@
           </ul>
         </div>
       <%}%>
-      <% if(result[0]._id == id && !username) {%>
+      <% if(result[0]._id == id && !nome) {%>
         <div class="alert alert-warning">
           <strong>Atenção!!</strong>
           <ul>

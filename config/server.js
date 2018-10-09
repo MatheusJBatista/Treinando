@@ -29,6 +29,6 @@ consign()
   .then('app/model')
   .into(app);
 
-app.use(express.static('app/view/public'));
+app.use(express.static('./app/view/public'));
 
 module.exports = app;

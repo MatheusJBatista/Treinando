@@ -1,3 +1,8 @@
+function verificarLogin(req,res){
+  if (!req.session.logado) {
+    res.redirect('/login');
+  }
+}
 module.exports.noticia = function(app,req,res){
   var id = req.query.artigo;
   var conexao = app.config.dbConnection;
@@ -24,6 +29,7 @@ module.exports.noticia = function(app,req,res){
         pagina: "home",
         subPagina: "",
         logado:req.session.logado,
+        id:req.session._id,
         fotoPerfil:req.session.fotoPerfil,
         username:req.session.username
       })
@@ -36,6 +42,7 @@ module.exports.noticia = function(app,req,res){
         erro:"Noticia não encontrada",
         pagina: "home",
         subPagina: "",
+        id:req.session._id,
         logado:req.session.logado,
         fotoPerfil:req.session.fotoPerfil,
         username:req.session.username
@@ -45,12 +52,14 @@ module.exports.noticia = function(app,req,res){
 }
 
 module.exports.inclusaoNoticia = function(app,req,res){
+  verificarLogin(req,res);
   res.render('inclusaoNoticia',{
     erro:"",
     sucesso:"",
     imageUpload: false,
     pagina: "home",
     subPagina: "",
+    id: req.session._id,
     logado:req.session.logado,
     fotoPerfil:req.session.fotoPerfil,
     username:req.session.username,

@@ -73,7 +73,6 @@ function query(db,dados){
           },
             {$set:{
               dataNascimento: dados.query.dataNascimento,
-              username: dados.query.username,
               nome: dados.query.nome
             }},
             { rating: 1 },
