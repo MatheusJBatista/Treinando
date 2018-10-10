@@ -36,6 +36,14 @@ module.exports.fileupload = function(app,req,res){
     mimetype = req.files.uploadPerfil.mimetype;
     nomeArquivo = req.session.username + '-' + Date.now();
   }
+
+  // Heroku config
+  // var u = new app.controller.classes.Usuario();
+  // var uDAO = new app.model.UsuarioDAO
+  var connection = app.config.dbConnection;
+  var u = new app.app.controller.classes.Usuario();
+  var uDAO = new app.app.model.UsuarioDAO();
+
   switch (mimetype) {
     case "image/png":
     nomeArquivo += '.png';
@@ -56,7 +64,18 @@ module.exports.fileupload = function(app,req,res){
       if (err) {
         return console.log(err);
       }
-      return true;
+      u._imgPerfil = "jogadores/"+req.session.username+'/'+nomeArquivo;
+      u._id = req.session._id;
+      uDAO._conexao = connection;
+      uDAO._query = u.getQuery();
+      uDAO._operacao = "updateImg";
+
+      uDAO.updateImg(function(err,result){
+        if (err) {
+          throw err;
+        }
+        console.log('Mudou a foto com sucesso');
+      })
     })
   }
   if (nomeArquivo) {

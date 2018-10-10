@@ -8,6 +8,7 @@ function Usuario(){
   this._emailVerificado;
   this._dataRegistro;
   this._keyEmail;
+  this._imgPerfil;
 }
 
 Usuario.prototype.getQuery = function () {
@@ -20,7 +21,8 @@ Usuario.prototype.getQuery = function () {
     nome: this._nomeCompleto,
     keyEmail: this._keyEmail,
     emailVerificado: this._emailVerificado,
-    dataRegistro: this._dataRegistro
+    dataRegistro: this._dataRegistro,
+    imgPerfil: this._imgPerfil
   }
   return query;
 };

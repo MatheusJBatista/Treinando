@@ -157,12 +157,8 @@ module.exports.completarPerfil = function(app,req,res){
         return console.log(err);
       }
       // Heroku Config
-      // if (app.controller.imageUploader.fileupload(app,req,res)) {
-      //   console.log('Upload com sucesso');
-      // }
-      if (app.app.controller.imageUploader.fileupload(app,req,res)) {
-        console.log('Upload com sucesso');
-      }
+      // app.controller.imageUploader.fileupload(app,req,res)
+      app.app.controller.imageUploader.fileupload(app,req,res)
       // if (req.session.nome) {
       //   fs.renameSync('./app/view/public/jogadores/'+req.session.nome+'/','./app/view/public/jogadores/'+result[0].nome+'/')
       // }

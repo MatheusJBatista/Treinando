@@ -66,6 +66,12 @@ UsuarioDAO.prototype.findById = function (callback) {
   this._conexao(dados);
 };
 
+UsuarioDAO.prototype.updateImg = function (callback) {
+  var dados = this.getDados();
+  dados.callback = callback;
+  this._conexao(dados);
+};
+
 module.exports = function(){
   return UsuarioDAO;
 }

@@ -56,7 +56,7 @@ module.exports.postLogin = function(app, req, res){
       req.session.nome = result[0].nome;
       req.session.dataNascimento = result[0].dataNascimento;
       req.session.username = result[0].username;
-      req.session.fotoPerfil = result[0].fotoPerfil;
+      req.session.fotoPerfil = result[0].imgPerfil;
       req.session._id = result[0]._id;
       res.redirect('/');
     }

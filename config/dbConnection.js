@@ -3,7 +3,7 @@ var ObjectId = require("mongodb").ObjectId;
 var assert = require("assert");
 var crypto = require("crypto");
 
-const url = "";
+const url = "mongodb+srv://matheusBatista:6FBc0jCRWRZdcNgL@matheusnoticia-bwmln.mongodb.net/test?retryWrites=true";
 const dbName = "portalNoticia";
 
 var conexao = function(dados){
@@ -88,6 +88,13 @@ function query(db,dados){
           {$set:{emailVerificado: true}},
           { rating: 1 },
         dados.callback);break;
+    case "updateImg":
+        collection.update(
+          {_id : ObjectId(dados.query._id)},
+          {$set:{
+            imgPerfil : dados.query.imgPerfil
+          }}, dados.callback
+        )
 
 
     default: break;
