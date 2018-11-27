@@ -20,7 +20,7 @@ Usuario.prototype.getQuery = function () {
     username: this._username,
     nome: this._nomeCompleto,
     keyEmail: this._keyEmail,
-    emailVerificado: this._emailVerificado,
+    emailVerificado: true,
     dataRegistro: this._dataRegistro,
     imgPerfil: this._imgPerfil
   }

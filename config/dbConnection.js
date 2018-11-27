@@ -9,7 +9,7 @@ const dbName = "portalNoticia";
 var conexao = function(dados){
   mongo.connect(url,function(err,client){
     assert.equal(null,err);
-    console.log("Conectado com sucesso");
+    // console.log("Conectado com sucesso");
     const db = client.db(dbName);
     query(db,dados);
     client.close();
@@ -48,8 +48,15 @@ function query(db,dados){
           _id: new ObjectId(dados.query._id)
         }).toArray(dados.callback);
         break;
-    case "findAllSortAsc":
-        collection.find({}).sort({dataCriacao:1}).toArray(dados.callback);
+    case "findByComentarioIdNoticia":
+        collection.find({
+          noticia:[{
+            id_noticia: dados.query.noticia[0].id_noticia
+          }]
+        }).toArray(dados.callback);
+        break;
+    case "findAllSortDesc":
+        collection.find({}).sort({dataCriacao:-1}).toArray(dados.callback);
         break;
     case "findByKey":
         collection.find({

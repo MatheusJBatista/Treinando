@@ -10,7 +10,7 @@ module.exports.index = function(app, req, res){
   var n = new app.app.controller.classes.Noticia();
   var nDAO = new app.app.model.NoticiaDAO();
 
-  nDAO._operacao = "findAllSortAsc";
+  nDAO._operacao = "findAllSortDesc";
   nDAO._conexao = conexao;
   nDAO._query = n.getQuery();
 
@@ -18,7 +18,7 @@ module.exports.index = function(app, req, res){
   if (!queryPagina) {
     queryPagina = 1;
   }
-  nDAO.findAllSortAsc(function(err,result){
+  nDAO.findAllSortDesc(function(err,result){
     if (err) {
       throw err;
     }

@@ -85,7 +85,7 @@ module.exports.fileupload = function(app,req,res){
       }
       res.render('imageUploader',{
         err:"",
-        resultado:"http://localhost:5000/jogadores/"+req.session.username+"/noticia/"+nomeArquivo
+        resultado:"/jogadores/"+req.session.username+"/noticia/"+nomeArquivo
       })
     })
   }

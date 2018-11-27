@@ -14,23 +14,26 @@
             <% var i = 4 * (queryPagina-1) %>
             <% var maximoItem = maximoItem * queryPagina %>
             <% for(i; i < noticias.length && i < maximoItem;i++) {%>
-              <div class="col-lg-6">
+              <div class="col-lg-6" style="margin-bottom:10px; border: 1px solid #353220;">
                 <a href="noticia?artigo=<%=noticias[i]._id%>">
+                  <img src="<%= noticias[i].capa %>" class="rounded float-left" alt="..." width="100px">
                   <h3 class="noticia-textos"></h3>
                   <%-noticias[i].tituloNoticia%>
                 </a>
-                <p class="noticia-textos">Autor: Matheus</p>
-                <%- noticias[i].sinopse%>
+                <p class="noticia-textos">Autor: <%= noticias[i].autor[0].autor %></p>
+                Sinopse:<%- noticias[i].sinopse%>
               </div>
               <%}%>
           <%}else{%>
             <% for(var i=0; i < noticias.length && i < 4;i++) {%>
-              <div class="col-lg-6">
+              <div class="col-lg-6" style="margin-bottom:10px; border: 1px solid #353220;">
                 <a href="noticia?artigo=<%=noticias[i]._id%>">
+                  <img src="<%= noticias[i].capa %>" class="rounded float-left" alt="..." width="100px">
                   <h3 class="noticia-textos"></h3>
                   <%-noticias[i].tituloNoticia%>
                 </a>
-                <p class="noticia-textos">Autor: Matheus</p>
+                <p class="noticia-textos">Autor: <%= noticias[i].autor[0].autor %></p>
+                <p class="noticia-textos"></p>
                 <%- noticias[i].sinopse%>
               </div>
             <%}%>

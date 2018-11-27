@@ -68,9 +68,11 @@ module.exports.inclusaoNoticia = function(app,req,res){
 }
 
 module.exports.registerNoticia = function(app,req,res){
+  req.assert("capa","Coloque uma capa").notEmpty();
   req.assert("noticia","Crie uma noticia").notEmpty();
   req.assert("titulo","Crie um Título").notEmpty();
   req.assert("sinopse","Crie uma sinopse").notEmpty();
+  req.assert("sinopse","sinopse deve ter no maximo 208 caracteres").len(0,208);
 
   var erros = req.validationErrors();
 
@@ -81,6 +83,7 @@ module.exports.registerNoticia = function(app,req,res){
       pagina: "home",
       subPagina: "",
       imageUpload: false,
+      id: req.session._id,
       logado:req.session.logado,
       fotoPerfil:req.session.fotoPerfil,
       username:req.session.username,
@@ -96,8 +99,10 @@ module.exports.registerNoticia = function(app,req,res){
   n._autor = req.session.username;
   n._dataCriacao = Date().toString();
   n._titulo = "<h3 class='noticia-textos'>"+req.body.titulo+"</h3>";
-  n._sinopse = "<h6 class='noticia-textos'>"+req.body.sinopse+"</h6>";
+  n._sinopse = "<h6 class='noticia-textos'>Sinopse: "+req.body.sinopse+"</h6>";
   n._noticia = req.body.noticia;
+  n._capa = req.body.capa;
+  n._idAutor = req.session._id;
 
   var validarTitulo = n._titulo;
   var validarResumo = n._sinopse;
@@ -121,6 +126,7 @@ module.exports.registerNoticia = function(app,req,res){
       pagina: "home",
       subPagina: "",
       imageUpload: false,
+      id: req.session._id,
       logado:req.session.logado,
       fotoPerfil:req.session.fotoPerfil,
       username:req.session.username,
@@ -138,6 +144,7 @@ module.exports.registerNoticia = function(app,req,res){
       imageUpload: false,
       pagina: "home",
       subPagina: "",
+      id: req.session._id,
       logado:req.session.logado,
       fotoPerfil:req.session.fotoPerfil,
       username:req.session.username,
@@ -167,6 +174,7 @@ module.exports.registerNoticia = function(app,req,res){
         sucesso: "",
         pagina: "home",
         subPagina: "",
+        id: req.session._id,
         logado:req.session.logado,
         fotoPerfil:req.session.fotoPerfil,
         username:req.session.username,
@@ -186,6 +194,7 @@ module.exports.registerNoticia = function(app,req,res){
           erro:"",
           pagina: "home",
           subPagina: "",
+          id: req.session._id,
           logado:req.session.logado,
           fotoPerfil:req.session.fotoPerfil,
           username:req.session.username,

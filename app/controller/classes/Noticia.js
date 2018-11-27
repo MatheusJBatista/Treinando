@@ -6,6 +6,7 @@ function Noticia(){
   this._titulo;
   this._noticia;
   this._sinopse;
+  this._capa;
 }
 
 Noticia.prototype.getQuery = function(){
@@ -18,7 +19,8 @@ Noticia.prototype.getQuery = function(){
     dataCriacao: this._dataCriacao,
     tituloNoticia: this._titulo,
     noticia: this._noticia,
-    sinopse: this._sinopse
+    sinopse: this._sinopse,
+    capa:this._capa
   }
 }
 

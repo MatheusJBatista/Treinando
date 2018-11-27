@@ -36,7 +36,7 @@ NoticiaDAO.prototype.findById = function (callback) {
   this._conexao(dados);
 };
 
-NoticiaDAO.prototype.findAllSortAsc = function(callback){
+NoticiaDAO.prototype.findAllSortDesc = function(callback){
   var dados = this.getDados();
   dados.callback = callback;
   this._conexao(dados);

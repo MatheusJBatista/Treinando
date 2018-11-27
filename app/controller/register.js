@@ -64,7 +64,7 @@ module.exports.postRegister = function(app,req,res){
     if (result.length > 0) {
       res.render("register",{
         error:[{
-          msg: "Username já cadastrado, favor fazer crie outro"
+          msg: "Username já cadastrado, favor crie outro"
         }],
         dadosForm: req.body
       })
@@ -110,7 +110,7 @@ module.exports.postRegister = function(app,req,res){
             req.session.verificarEmail = true;
             req.session.email = u._email;
             req.session.entrarEmail = localEmail[1];
-            res.redirect('verificarEmail');
+            res.redirect('/');
           })
         }
       })

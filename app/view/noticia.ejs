@@ -7,6 +7,10 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.5.1/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.5.1/css/froala_style.min.css" rel="stylesheet" type="text/css" />
     <title><%= headTitle %></title>
+    <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
   </head>
   <body>
     <% include include/navbar %>
@@ -14,6 +18,76 @@
       <% if(noticia) {%>
           <%-noticia.noticia%>
       <%}%>
+      <div class="form-group">
+        <label for="" class="text-light">Comentario:</label>
+        <input type="text" class="form-control" id="comentario"></input>
+        <button type="button" name="button" class="btn btn-primary" id="comentario-noticia">Comentar</button>
+      </div>
+      <div class="col-md-12" id="comentarios">
+
+      </div>
     </div>
+    <script type="text/javascript">
+    function getQueryString() {
+      var urlParams = new URLSearchParams(window.location.search);
+      var parametros = urlParams.toString().split("=")
+      return parametros[1];
+    }
+
+    function postComentario() {
+      return new Promise((resolve,reject)=>{
+        $.ajax({
+          method:"POST",
+          url:"/noticia/comentario",
+          data:{comentario:$("#comentario").val(),noticia:getQueryString()}
+        })
+        .done(function (retorno) {
+          resolve(retorno)
+        })
+      })
+    }
+    function getAllComents(){
+      return new Promise((resolve,reject)=>{
+        $.ajax({
+          method: "GET",
+          url: "/noticia/comentario?noticia="+getQueryString()
+        })
+        .done(function (findAll) {
+          resolve(findAll)
+        })
+      })
+    }
+    function makeComentarios(findAll) {
+      var comentario = $("#comentarios").html();
+      console.log(findAll);
+      for (var i = 0; i < findAll.length; i++) {
+        comentario += "<div class='col-md-12'>";
+          comentario += "<div class='row'>";
+            comentario += "<div class='col-md-2'>";
+              comentario += "<img src='/"+findAll[i].usuario[0].fotoUsuario+"' style='border-radius:50%;padding-bottom:10px' alt='' width='70px'></img>"
+            comentario += "</div>"
+            comentario += "<div class='col-md-10'>";
+              comentario += "<p class='text-light' style='margin-bottom:0'>"+findAll[i].usuario[0].username+"   "+findAll[i].dataComentario+"</p>"
+              comentario += "<p class='text-light' style='margin-bottom:0'>"+findAll[i].comentario+"</p>"
+            comentario += "</div>"
+          comentario += "</div>"
+        comentario += "</div>";
+      }
+      console.log(comentario);
+      $("#comentarios").html(comentario);
+    }
+      $(document).ready(function () {
+        getAllComents().then(function (findAll) {
+          makeComentarios(findAll);
+        });
+        $("#comentario-noticia").click(function () {
+          postComentario().then(function (inserted) {
+            getAllComents().then(function (findAll) {
+              makeComentarios(findAll);
+            })
+          });
+        })
+      })
+    </script>
   </body>
 </html>
