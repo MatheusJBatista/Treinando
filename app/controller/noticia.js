@@ -53,6 +53,10 @@ module.exports.noticia = function(app,req,res){
 
 module.exports.inclusaoNoticia = function(app,req,res){
   verificarLogin(req,res);
+  if (!req.session.autor) {
+    res.redirect('/');
+    return;
+  }
   res.render('inclusaoNoticia',{
     erro:"",
     sucesso:"",

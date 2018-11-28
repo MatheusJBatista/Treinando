@@ -35,7 +35,8 @@ module.exports.profile = function(app,req,res){
         email:req.session.email,
         nome:req.session.nome,
         id:req.session._id,
-        username:req.session.username
+        username:req.session.username,
+        autor:req.session.autor
       });
     }else {
       res.render('profileError',{
@@ -46,7 +47,8 @@ module.exports.profile = function(app,req,res){
         email:req.session.email,
         nome:req.session.nome,
         id:req.session._id,
-        username:req.session.username
+        username:req.session.username,
+        autor:req.session.autor
       });
     }
   })
@@ -89,7 +91,8 @@ module.exports.config = function(app,req,res){
         email:req.session.email,
         nome:req.session.nome,
         id:req.session._id,
-        username:req.session.username
+        username:req.session.username,
+        autor:req.session.autor
       });
     }
     else {
@@ -127,7 +130,8 @@ module.exports.completarPerfil = function(app,req,res){
       email:req.session.email,
       nome:req.session.nome,
       id:req.session._id,
-      username:req.session.username
+      username:req.session.username,
+      autor:req.session.autor
     });
     return;
   }

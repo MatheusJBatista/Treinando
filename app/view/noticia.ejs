@@ -64,11 +64,11 @@
         comentario += "<div class='col-md-12'>";
           comentario += "<div class='row'>";
             comentario += "<div class='col-md-2'>";
-              comentario += "<img src='/"+findAll[i].usuario[0].fotoUsuario+"' style='border-radius:50%;padding-bottom:10px' alt='' width='70px'></img>"
+              comentario += "<img src='/"+findAll[i].usuario[0].fotoUsuario+"' style='border-radius:50%;padding-bottom:10px' alt='' width='100px'></img>"
             comentario += "</div>"
             comentario += "<div class='col-md-10'>";
               comentario += "<p class='text-light' style='margin-bottom:0'>"+findAll[i].usuario[0].username+"   "+findAll[i].dataComentario+"</p>"
-              comentario += "<p class='text-light' style='margin-bottom:0'>"+findAll[i].comentario+"</p>"
+              comentario += "<p class='text-light' style='margin-bottom:0;word-break: break-all;'>"+findAll[i].comentario+"</p>"
             comentario += "</div>"
           comentario += "</div>"
         comentario += "</div>";

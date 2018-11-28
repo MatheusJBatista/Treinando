@@ -24,6 +24,12 @@ ComentarioDAO.prototype.findByComentarioIdNoticia = function (callback) {
   this._conexao(dados);
 };
 
+ComentarioDAO.prototype.findByJogadorComentario = function (callback) {
+  var dados = this.getDados();
+  dados.callback = callback;
+  this._conexao(dados);
+};
+
 module.exports = function(){
   return ComentarioDAO;
 };

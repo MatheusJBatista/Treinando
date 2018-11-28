@@ -9,6 +9,7 @@ function Usuario(){
   this._dataRegistro;
   this._keyEmail;
   this._imgPerfil;
+  this._autor;
 }
 
 Usuario.prototype.getQuery = function () {
@@ -22,7 +23,8 @@ Usuario.prototype.getQuery = function () {
     keyEmail: this._keyEmail,
     emailVerificado: true,
     dataRegistro: this._dataRegistro,
-    imgPerfil: this._imgPerfil
+    imgPerfil: this._imgPerfil,
+    autor: this._autor
   }
   return query;
 };

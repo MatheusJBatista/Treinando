@@ -31,10 +31,6 @@ module.exports.post = function (app,req,res) {
 }
 
 module.exports.get = function (app,req,res) {
-    if (!req.query.noticia) {
-      res.sendStatus(412);
-      return;
-    }
     var conexao = app.config.dbConnection;
     var c = new app.app.controller.classes.Comentario();
     var cDAO = new app.app.model.ComentarioDAO();
@@ -43,11 +39,26 @@ module.exports.get = function (app,req,res) {
 
     cDAO._query = c.getQuery();
     cDAO._conexao = conexao;
-    cDAO._operacao = "findByComentarioIdNoticia";
-    cDAO.findByComentarioIdNoticia(function (err,result) {
-      if (err) {
-        throw err;
+    if (req.query.usuario) {
+      console.log(typeof(req.query.usuario));
+      cDAO._operacao = "findByJogadorComentario";
+      cDAO.findByJogadorComentario(function (err,result) {
+        if (err) {
+          throw err;
+        }
+        res.send(result);
+      })
+    }else {
+      if (!req.query.noticia) {
+        res.sendStatus(412);
+        return;
       }
-      res.send(result);
-    })
+      cDAO._operacao = "findByComentarioIdNoticia";
+      cDAO.findByComentarioIdNoticia(function (err,result) {
+        if (err) {
+          throw err;
+        }
+        res.send(result);
+      })
+    }
 }

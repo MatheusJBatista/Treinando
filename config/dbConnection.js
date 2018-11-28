@@ -55,6 +55,13 @@ function query(db,dados){
           }]
         }).toArray(dados.callback);
         break;
+    case "findByJogadorComentario":
+        collection.find({
+          usuario:[{
+            id_usuario:(dados.query.usuario[0].id_usuario)
+          }]
+        }).toArray(dados.callback);
+        break;
     case "findAllSortDesc":
         collection.find({}).sort({dataCriacao:-1}).toArray(dados.callback);
         break;
