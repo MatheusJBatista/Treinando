@@ -50,16 +50,18 @@ function query(db,dados){
         break;
     case "findByComentarioIdNoticia":
         collection.find({
-          noticia:[{
-            id_noticia: dados.query.noticia[0].id_noticia
-          }]
+          // noticia:{
+          //   id_noticia: dados.query.noticia.id_noticia
+          // }
+          'noticia.id_noticia':dados.query.noticia.id_noticia
         }).toArray(dados.callback);
         break;
     case "findByJogadorComentario":
         collection.find({
-          usuario:[{
-            id_usuario:(dados.query.usuario[0].id_usuario)
-          }]
+          // usuario:[{
+          //   id_usuario:(dados.query.usuario[0].id_usuario)
+          // }]
+          'usuario.id_usuario': dados.query.usuario.id_usuario
         }).toArray(dados.callback);
         break;
     case "findAllSortDesc":

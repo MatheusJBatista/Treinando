@@ -28,6 +28,12 @@
       </div>
     </div>
     <script type="text/javascript">
+    function loading() {
+      var loadingGif = "<div class='col-md-4' style='width:50%;margin:0 auto;'>"
+        loadingGif += "<img src='/img/loading-gif.gif'></img>";
+      loadingGif += "</div>";
+      $("#comentarios").html(loadingGif);
+    }
     function getQueryString() {
       var urlParams = new URLSearchParams(window.location.search);
       var parametros = urlParams.toString().split("=")
@@ -35,6 +41,7 @@
     }
 
     function postComentario() {
+      loading();
       return new Promise((resolve,reject)=>{
         $.ajax({
           method:"POST",
@@ -58,25 +65,25 @@
       })
     }
     function makeComentarios(findAll) {
-      var comentario = $("#comentarios").html();
+      var comentario = '';
       console.log(findAll);
       for (var i = 0; i < findAll.length; i++) {
         comentario += "<div class='col-md-12'>";
           comentario += "<div class='row'>";
             comentario += "<div class='col-md-2'>";
-              comentario += "<img src='/"+findAll[i].usuario[0].fotoUsuario+"' style='border-radius:50%;padding-bottom:10px' alt='' width='100px'></img>"
+              comentario += "<img src='/"+findAll[i].usuario.fotoUsuario+"' style='border-radius:50%;padding-bottom:10px' alt='' width='100px'></img>"
             comentario += "</div>"
             comentario += "<div class='col-md-10'>";
-              comentario += "<p class='text-light' style='margin-bottom:0'>"+findAll[i].usuario[0].username+"   "+findAll[i].dataComentario+"</p>"
+              comentario += "<p class='text-light' style='margin-bottom:0'>"+findAll[i].usuario.username+"   "+findAll[i].dataComentario+"</p>"
               comentario += "<p class='text-light' style='margin-bottom:0;word-break: break-all;'>"+findAll[i].comentario+"</p>"
             comentario += "</div>"
           comentario += "</div>"
         comentario += "</div>";
       }
-      console.log(comentario);
       $("#comentarios").html(comentario);
     }
       $(document).ready(function () {
+        loading();
         getAllComents().then(function (findAll) {
           makeComentarios(findAll);
         });

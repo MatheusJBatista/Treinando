@@ -35,21 +35,22 @@ module.exports.get = function (app,req,res) {
     var c = new app.app.controller.classes.Comentario();
     var cDAO = new app.app.model.ComentarioDAO();
 
+    c._idUsuario = req.query.usuario;
     c._idNoticia = req.query.noticia;
 
     cDAO._query = c.getQuery();
     cDAO._conexao = conexao;
-    if (req.query.usuario) {
-      console.log(typeof(req.query.usuario));
+    if (c._idUsuario) {
       cDAO._operacao = "findByJogadorComentario";
       cDAO.findByJogadorComentario(function (err,result) {
         if (err) {
           throw err;
         }
+        console.log(result);
         res.send(result);
       })
     }else {
-      if (!req.query.noticia) {
+      if (!c._idNoticia) {
         res.sendStatus(412);
         return;
       }
@@ -58,6 +59,7 @@ module.exports.get = function (app,req,res) {
         if (err) {
           throw err;
         }
+        console.log(result);
         res.send(result);
       })
     }

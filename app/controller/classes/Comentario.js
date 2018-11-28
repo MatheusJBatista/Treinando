@@ -9,14 +9,14 @@ function Comentario(){
 
 Comentario.prototype.getQuery = function(){
   return {
-    usuario: [{
+    usuario: {
       id_usuario: this._idUsuario,
       username: this._username,
       fotoUsuario: this._fotoUsuario
-    }],
-    noticia: [{
+    },
+    noticia: {
       id_noticia: this._idNoticia
-    }],
+    },
     comentario: this._comentario,
     dataComentario: this._dataComentario
   }
