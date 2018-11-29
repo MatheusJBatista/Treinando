@@ -16,7 +16,7 @@
             <% for(i; i < noticias.length && i < maximoItem;i++) {%>
               <div class="col-lg-6" style="margin-bottom:10px; border: 1px solid #353220;">
                 <a href="noticia?artigo=<%=noticias[i]._id%>">
-                  <img src="<%= noticias[i].capa %>" class="rounded float-left" alt="..." width="100px">
+                  <img src="<%= noticias[i].capa %>" class="rounded float-left" alt="" width="100px">
                   <h3 class="noticia-textos"></h3>
                   <%-noticias[i].tituloNoticia%>
                 </a>

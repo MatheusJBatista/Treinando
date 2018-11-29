@@ -71,7 +71,7 @@
         comentario += "<div class='col-md-12'>";
           comentario += "<div class='row'>";
             comentario += "<div class='col-md-2'>";
-              comentario += "<img src='/"+findAll[i].usuario.fotoUsuario+"' style='border-radius:50%;padding-bottom:10px' alt='' width='100px'></img>"
+              comentario += "<a href='/profile/"+findAll[i].usuario.id_usuario+"'><img src='/"+findAll[i].usuario.fotoUsuario+"' style='border-radius:50%;padding-bottom:10px' alt='' width='100px'></img></a>"
             comentario += "</div>"
             comentario += "<div class='col-md-10'>";
               comentario += "<p class='text-light' style='margin-bottom:0'>"+findAll[i].usuario.username+"   "+findAll[i].dataComentario+"</p>"

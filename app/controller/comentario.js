@@ -11,6 +11,13 @@ module.exports.post = function (app,req,res) {
   var conexao = app.config.dbConnection;
   var c = new app.app.controller.classes.Comentario();
   var cDAO = new app.app.model.ComentarioDAO();
+  var n = new app.app.controller.classes.Noticia();
+  var nDAO = new app.app.model.NoticiaDAO();
+  n._id = req.body.noticia;
+
+  nDAO._operacao = "findById";
+  nDAO._conexao = conexao;
+  nDAO._query = n.getQuery();
 
   c._idUsuario = req.session._id;
   c._username = req.session.username;
@@ -18,15 +25,20 @@ module.exports.post = function (app,req,res) {
   c._dataComentario = moment().format();
   c._idNoticia = req.body.noticia;
   c._fotoUsuario = req.session.fotoPerfil;
-
-  cDAO._query = c.getQuery();
-  cDAO._conexao = conexao;
-  cDAO._operacao = "insert";
-  cDAO.insert(function (err,result) {
+  nDAO.findById(function(err,result){
     if (err) {
-      throw err;
+      return console.log(err);
     }
-    res.sendStatus(200);
+    c._tituloNoticia = result[0].tituloPuro;
+    cDAO._query = c.getQuery();
+    cDAO._conexao = conexao;
+    cDAO._operacao = "insert";
+    cDAO.insert(function (err,result) {
+      if (err) {
+        throw err;
+      }
+      res.sendStatus(200);
+    })
   })
 }
 
@@ -35,21 +47,19 @@ module.exports.get = function (app,req,res) {
     var c = new app.app.controller.classes.Comentario();
     var cDAO = new app.app.model.ComentarioDAO();
 
-    c._idUsuario = req.query.usuario;
     c._idNoticia = req.query.noticia;
 
     cDAO._query = c.getQuery();
     cDAO._conexao = conexao;
-    if (c._idUsuario) {
-      cDAO._operacao = "findByJogadorComentario";
-      cDAO.findByJogadorComentario(function (err,result) {
-        if (err) {
-          throw err;
-        }
-        console.log(result);
-        res.send(result);
-      })
-    }else {
+    // if (c._idUsuario) {
+    //   cDAO._operacao = "findByJogadorComentario";
+    //   cDAO.findByJogadorComentario(function (err,result) {
+    //     if (err) {
+    //       throw err;
+    //     }
+    //     res.send(result);
+    //   })
+    // }else {
       if (!c._idNoticia) {
         res.sendStatus(412);
         return;
@@ -62,5 +72,5 @@ module.exports.get = function (app,req,res) {
         console.log(result);
         res.send(result);
       })
-    }
+    // }
 }

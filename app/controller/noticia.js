@@ -102,6 +102,7 @@ module.exports.registerNoticia = function(app,req,res){
   n._id = req.session.userId;
   n._autor = req.session.username;
   n._dataCriacao = Date().toString();
+  n._tituloPuro = req.body.titulo;
   n._titulo = "<h3 class='noticia-textos'>"+req.body.titulo+"</h3>";
   n._sinopse = "<h6 class='noticia-textos'>Sinopse: "+req.body.sinopse+"</h6>";
   n._noticia = req.body.noticia;

@@ -6,6 +6,10 @@ module.exports.profile = function(app,req,res){
   var uDAO = new app.app.model.UsuarioDAO();
   var u = new app.app.controller.classes.Usuario();
   var connection = app.config.dbConnection;
+  var c = new app.app.controller.classes.Comentario();
+  var cDAO = new app.app.model.ComentarioDAO();
+
+  cDAO._conexao = connection;
   var operacao = "";
 
   if (req.params.profile.length == 24) {
@@ -19,25 +23,44 @@ module.exports.profile = function(app,req,res){
   uDAO._operacao = operacao;
   uDAO._conexao = connection;
 
+  var queryPagina = req.query.paginacao;
+  if (!queryPagina) {
+    queryPagina = 1;
+  }
+
   uDAO.findByProfile(function(err,result){
     if (err) {
       return console.log(err);
     }
     if (result.length == 1) {
-      res.render('perfil',{
-        pagina: "perfil",
-        erro: "",
-        sucesso: "",
-        result:result,
-        logado:req.session.logado,
-        fotoPerfil:req.session.fotoPerfil,
-        dataNascimento:req.session.dataNascimento,
-        email:req.session.email,
-        nome:req.session.nome,
-        id:req.session._id,
-        username:req.session.username,
-        autor:req.session.autor
-      });
+      var findByProfile = result;
+      c._idUsuario = result[0]._id.toString();
+      cDAO._query = c.getQuery();
+      cDAO._operacao = "findByJogadorComentario";
+
+        cDAO.findByJogadorComentario(function (err,result) {
+          if (err) {
+            throw err;
+          }
+          console.log(queryPagina);
+          res.render('perfil',{
+            pagina: "perfil",
+            erro: "",
+            sucesso: "",
+            result:findByProfile,
+            comentarios:result,
+            logado:req.session.logado,
+            fotoPerfil:req.session.fotoPerfil,
+            dataNascimento:req.session.dataNascimento,
+            email:req.session.email,
+            nome:req.session.nome,
+            id:req.session._id,
+            username:req.session.username,
+            autor:req.session.autor,
+            queryPagina:queryPagina,
+            numPaginas:Math.ceil(result.length/4)
+          });
+        })
     }else {
       res.render('profileError',{
         pagina: "perfil",

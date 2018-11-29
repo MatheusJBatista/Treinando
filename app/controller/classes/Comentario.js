@@ -5,6 +5,7 @@ function Comentario(){
   this._dataComentario;
   this._idNoticia;
   this._fotoUsuario;
+  this._tituloNoticia;
 }
 
 Comentario.prototype.getQuery = function(){
@@ -15,7 +16,8 @@ Comentario.prototype.getQuery = function(){
       fotoUsuario: this._fotoUsuario
     },
     noticia: {
-      id_noticia: this._idNoticia
+      id_noticia: this._idNoticia,
+      titulo: this._tituloNoticia
     },
     comentario: this._comentario,
     dataComentario: this._dataComentario
