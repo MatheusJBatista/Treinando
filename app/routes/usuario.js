@@ -4,10 +4,10 @@ module.exports = function(app){
     // app.controller.usuario.meuPerfil(app,req,res);
     app.app.controller.usuario.profile(app,req,res);
   })
-  app.get('/profile/:profile/config',function(req,res){
+  app.get('/profile/:profile/:pagina',function(req,res){
     // Heroku config
     // app.controller.usuario.meuPerfil(app,req,res);
-    app.app.controller.usuario.config(app,req,res);
+    app.app.controller.usuario.pagina(app,req,res);
   })
 
   app.post('/profile/:profile/completarPerfil',function(req,res){

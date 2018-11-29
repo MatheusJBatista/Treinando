@@ -77,34 +77,82 @@ module.exports.profile = function(app,req,res){
   })
 }
 
-module.exports.config = function(app,req,res){
+module.exports.pagina = function(app,req,res){
   // Heroku config
   // var uDAO = new app.model.UsuarioDAO();
   // var u = new app.controller.classes.usuario();
   var uDAO = new app.app.model.UsuarioDAO();
+  var nDAO = new app.app.model.NoticiaDAO();
   var u = new app.app.controller.classes.Usuario();
+  var n = new app.app.controller.classes.Noticia();
   var connection = app.config.dbConnection;
   var operacao = "";
 
   if (req.params.profile.length == 24) {
-    u._id = req.params.profile
-    operacao = "findById";
+    u._id = req.params.profile;
+    n._idAutor = req.params.profile;
+    operacao = ["findById","findByIdAutor"];
   }else {
     u._username = req.params.profile;
-    operacao = "findByProfileUsername";
+    n._autor = req.params.profile;
+    operacao = ["findByProfileUsername","findByUsernameAutor"];
   }
+
+  if (!req.query.paginacao) {
+    queryPagina = 1
+  }
+  else {
+    queryPagina = req.query.paginacao;
+  }
+
   uDAO._query = u.getQuery();
-  uDAO._operacao = operacao;
+  uDAO._operacao = operacao[0];
   uDAO._conexao = connection;
+
+
+  function getNoticiasByAutor() {
+    nDAO._query = n.getQuery();
+    nDAO._operacao = operacao[1];
+    nDAO._conexao = connection;
+    return new Promise(function (resolve,reject) {
+      nDAO.findByProfile(function (err,result) {
+        if (err) {
+          throw err
+        }
+        resolve(result);
+      })
+    })
+  }
 
   uDAO.findByProfile(function(err,result){
     if (err) {
       return console.log(err);
     }
-    console.log(result);
-    if (result[0]._id == req.session._id) {
+    if (req.params.pagina == 'noticias') {
+      getNoticiasByAutor().then(function (findNoticias) {
+          console.log(nDAO);
+        res.render('perfil',{
+          pagina: req.params.pagina,
+          erro: "",
+          sucesso: "",
+          result:result,
+          logado:req.session.logado,
+          fotoPerfil:req.session.fotoPerfil,
+          dataNascimento:req.session.dataNascimento,
+          email:req.session.email,
+          nome:req.session.nome,
+          id:req.session._id,
+          username:req.session.username,
+          autor:req.session.autor,
+          numPaginas:Math.ceil(findNoticias.length/4),
+          queryPagina: queryPagina,
+          findNoticias:findNoticias
+        });
+      })
+    }
+    else {
       res.render('perfil',{
-        pagina: "perfilConfig",
+        pagina: req.params.pagina,
         erro: "",
         sucesso: "",
         result:result,
@@ -117,9 +165,6 @@ module.exports.config = function(app,req,res){
         username:req.session.username,
         autor:req.session.autor
       });
-    }
-    else {
-      res.redirect('/profile/'+req.params.profile);
     }
   })
 }
@@ -143,6 +188,7 @@ module.exports.completarPerfil = function(app,req,res){
 
   var erros = req.validationErrors();
   if (erros) {
+    console.log(erros);
     res.render('perfil',{
       pagina: "perfil",
       erro: erros,
@@ -154,7 +200,8 @@ module.exports.completarPerfil = function(app,req,res){
       nome:req.session.nome,
       id:req.session._id,
       username:req.session.username,
-      autor:req.session.autor
+      autor:req.session.autor,
+      result: ''
     });
     return;
   }

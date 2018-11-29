@@ -48,13 +48,23 @@ function query(db,dados){
           _id: new ObjectId(dados.query._id)
         }).toArray(dados.callback);
         break;
+    case "findByIdAutor":
+        collection.find({
+          'autor.id_autor': dados.query.autor.id_autor
+        }).toArray(dados.callback);
+        break;
+    case "findByUsernameAutor":
+        collection.find({
+          'autor.autor': dados.query.autor.autor
+        }).toArray(dados.callback);
+        break;
     case "findByComentarioIdNoticia":
         collection.find({
           // noticia:{
           //   id_noticia: dados.query.noticia.id_noticia
           // }
           'noticia.id_noticia':dados.query.noticia.id_noticia
-        }).toArray(dados.callback);
+        }).sort({dataComentario:-1}).toArray(dados.callback);
         break;
     case "findByJogadorComentario":
         collection.find({

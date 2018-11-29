@@ -32,7 +32,8 @@ module.exports.index = function(app, req, res){
       logado:req.session.logado,
       fotoPerfil:req.session.fotoPerfil,
       username:req.session.username,
-      id:req.session._id
+      id:req.session._id,
+      autor:req.session.autor
     });
   })
 }

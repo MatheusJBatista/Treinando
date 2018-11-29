@@ -28,7 +28,7 @@ module.exports.noticia = function(app,req,res){
         imageUpload: false,
         pagina: "home",
         subPagina: "",
-        logado:req.session.logado,
+        logado:req.session.logado || false,
         id:req.session._id,
         fotoPerfil:req.session.fotoPerfil,
         username:req.session.username
@@ -99,12 +99,14 @@ module.exports.registerNoticia = function(app,req,res){
   // var n = new app.controller.classes.Noticia();
   var n = new app.app.controller.classes.Noticia();
 
+
   n._id = req.session.userId;
   n._autor = req.session.username;
   n._dataCriacao = Date().toString();
   n._tituloPuro = req.body.titulo;
   n._titulo = "<h3 class='noticia-textos'>"+req.body.titulo+"</h3>";
   n._sinopse = "<h6 class='noticia-textos'>Sinopse: "+req.body.sinopse+"</h6>";
+  n._sinopsePura = req.body.sinopse;
   n._noticia = req.body.noticia;
   n._capa = req.body.capa;
   n._idAutor = req.session._id;

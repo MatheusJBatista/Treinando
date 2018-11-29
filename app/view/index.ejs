@@ -1,12 +1,27 @@
 <!DOCTYPE html>
 <html lang="pt-br" dir="ltr">
   <% include include/head.ejs %>
+  <style media="screen">
+    .criarNoticia{
+      position: absolute;
+      margin-top:5px
+    }
+    @media only screen and (max-width: 767px) {
+      .criarNoticia {
+          position: relative;
+      }
+    }
+  </style>
   <body>
     <% include include/navbar.ejs %>
-    <div class="container">
-      <div class="alert alert-warning">
-        <strong>O site está 83% concluido</strong>
+    <% if(autor) {%>
+      <div class="col-md-2 criarNoticia">
+        <div class="alert alert-primary">
+          <strong><a href="/inclusaoNoticia" class="text text-dark">Escrever nova noticia</a></strong>
+        </div>
       </div>
+    <%}%>
+    <div class="container">
       <center><img src="img/noticia.png" alt="NoticiaLogo" class="imgLogoNoticia"></center>
       <div class="row">
         <% if(noticias.length > 0) {%>
@@ -20,7 +35,7 @@
                   <h3 class="noticia-textos"></h3>
                   <%-noticias[i].tituloNoticia%>
                 </a>
-                <p class="noticia-textos">Autor: <%= noticias[i].autor[0].autor %></p>
+                <p class="noticia-textos">Autor: <%= noticias[i].autor.autor %></p>
                 Sinopse:<%- noticias[i].sinopse%>
               </div>
               <%}%>
@@ -32,7 +47,7 @@
                   <h3 class="noticia-textos"></h3>
                   <%-noticias[i].tituloNoticia%>
                 </a>
-                <p class="noticia-textos">Autor: <%= noticias[i].autor[0].autor %></p>
+                <p class="noticia-textos">Autor: <%= noticias[i].autor.autor %></p>
                 <p class="noticia-textos"></p>
                 <%- noticias[i].sinopse%>
               </div>
