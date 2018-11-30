@@ -8,6 +8,7 @@ module.exports.profile = function(app,req,res){
   var connection = app.config.dbConnection;
   var c = new app.app.controller.classes.Comentario();
   var cDAO = new app.app.model.ComentarioDAO();
+  console.log(req.session);
 
   cDAO._conexao = connection;
   var operacao = "";
@@ -104,7 +105,6 @@ module.exports.pagina = function(app,req,res){
   else {
     queryPagina = req.query.paginacao;
   }
-
   uDAO._query = u.getQuery();
   uDAO._operacao = operacao[0];
   uDAO._conexao = connection;
@@ -184,8 +184,6 @@ module.exports.completarPerfil = function(app,req,res){
   req.assert('data', 'Data é obrigatório').notEmpty();
   req.assert('data', 'Data invalida').isISO8601();
 
-  console.log(req.body);
-
   var erros = req.validationErrors();
   if (erros) {
     console.log(erros);
@@ -225,6 +223,7 @@ module.exports.completarPerfil = function(app,req,res){
     if (err) {
       return console.log(err);
     }
+    app.app.controller.imageUploader.fileupload(app,req,res)
     uDAO._operacao = "findById";
     uDAO.findById(function(err,result){
       if (err) {
@@ -232,14 +231,12 @@ module.exports.completarPerfil = function(app,req,res){
       }
       // Heroku Config
       // app.controller.imageUploader.fileupload(app,req,res)
-      app.app.controller.imageUploader.fileupload(app,req,res)
       // if (req.session.nome) {
       //   fs.renameSync('./app/view/public/jogadores/'+req.session.nome+'/','./app/view/public/jogadores/'+result[0].nome+'/')
       // }
       // else if (!fs.existsSync('./app/view/public/jogadores/'+result[0].nome+'/')) {
       //   fs.mkdirSync('./app/view/public/jogadores/'+result[0].nome+'/');
       // }
-      console.log(result);
       if (result[0].nome && result[0].username && result[0].dataNascimento) {
         req.session.logado = true;
         req.session.emailVerificado = result[0].emailVerificado;
@@ -247,7 +244,7 @@ module.exports.completarPerfil = function(app,req,res){
         req.session.nome = result[0].nome;
         req.session.dataNascimento = result[0].dataNascimento;
         req.session.username = result[0].username;
-        req.session.fotoPerfil = result[0].fotoPerfil;
+        req.session.fotoPerfil = result[0].imgPerfil;
         req.session._id = result[0]._id;
         //sessao apenas para nao reenviar o formulario
         req.session.vazar = true;

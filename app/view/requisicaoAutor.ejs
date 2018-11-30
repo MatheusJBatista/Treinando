@@ -8,13 +8,39 @@
   <body>
     <% include include/navbar %>
     <div class="container">
-      <div class="col-md-12">
-        <h2 class="text-white">Titulo: Eu quero ser autor</h2>
-        <p class="text-white">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
-          Por favor eu sempre quis ser um autor, autoriza minha requisição</p>
-      </div>
-      <button type="button" name="button" class="btn btn-primary">Qualificar usuario para ser autor</button>
-      <button type="button" name="button" class="btn btn-danger">Usuario desqualificado</button>
+      <%if(findById.length > 0){%>
+        <div class="col-md-12">
+          <h2 class="text-white">Titulo: <%=findById[0].titulo%></h2>
+          <div style="word-break: break-all;" class="col-md-12">
+            <%-findById[0].noticia%>
+          </div>
+        </div>
+        <button type="button" name="button" class="btn btn-primary" id="sim">Qualificar usuario para ser autor</button>
+        <button type="button" name="button" class="btn btn-danger" id="nao">Usuario desqualificado</button>
+
+        <script type="text/javascript">
+        function validarAutor(aprovado) {
+          $.ajax({
+            method:"POST",
+            url:"/validarAutor/<%=findById[0]._id%>/<%=findById[0].usuario.id_usuario%>",
+            data:{aprovado:aprovado}
+          }).done(function (retorno) {
+            window.location.href = '/validarAutor';
+          })
+        }
+        $(document).ready(function () {
+          $('button').click(function () {
+            var aprovado = false;
+            if ($(this).attr('id') == 'sim') {
+              aprovado = true;
+            }
+            validarAutor(aprovado);
+          })
+        })
+        </script>
+      <%}else{%>
+        <h1 class="text-white">Página não encontrada</h1>
+      <%}%>
     </div>
   </body>
 </html>

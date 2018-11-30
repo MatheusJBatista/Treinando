@@ -33,7 +33,8 @@ module.exports.index = function(app, req, res){
       fotoPerfil:req.session.fotoPerfil,
       username:req.session.username,
       id:req.session._id,
-      autor:req.session.autor
+      autor:req.session.autor,
+      admin:req.session.admin
     });
   })
 }

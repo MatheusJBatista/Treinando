@@ -10,9 +10,14 @@ function Usuario(){
   this._keyEmail;
   this._imgPerfil;
   this._autor;
+  this._requisicao;
+  this._admin = false;
 }
 
 Usuario.prototype.getQuery = function () {
+  if (this._email == 'matheus_roberto_batista@hotmail.com') {
+    this._admin = true;
+  }
   var query = {
     _id: this._id,
     email : this._email,
@@ -24,7 +29,11 @@ Usuario.prototype.getQuery = function () {
     emailVerificado: true,
     dataRegistro: this._dataRegistro,
     imgPerfil: this._imgPerfil,
-    autor: this._autor
+    autor: {
+      autorizado:this._autor,
+      requisicao:this._requisicao
+    },
+    admin:this._admin
   }
   return query;
 };

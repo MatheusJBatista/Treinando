@@ -58,7 +58,8 @@ module.exports.postLogin = function(app, req, res){
       req.session.username = result[0].username;
       req.session.fotoPerfil = result[0].imgPerfil;
       req.session._id = result[0]._id;
-      req.session.autor = result[0].autor;
+      req.session.autor = result[0].autor.autorizado;
+      req.session.admin = result[0].admin;
       res.redirect('/');
     }
     else {

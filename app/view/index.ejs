@@ -14,10 +14,22 @@
   </style>
   <body>
     <% include include/navbar.ejs %>
-    <% if(autor) {%>
-      <div class="col-md-2 criarNoticia">
+    <% if(autor || admin) {%>
+      <div class="col-md-3 criarNoticia">
         <div class="alert alert-primary">
-          <strong><a href="/inclusaoNoticia" class="text text-dark">Escrever nova noticia</a></strong>
+          <ul>
+
+            <% if(autor) {%>
+              <li>
+                <strong><a href="/inclusaoNoticia" class="text text-dark">Escrever nova noticia</a></strong>
+              </li>
+            <%}%>
+            <% if(admin) {%>
+              <li>
+                <strong><a href="/validarAutor" class="text text-dark">Validar novatos</a></strong>
+              </li>
+            <%}%>
+          </ul>
         </div>
       </div>
     <%}%>

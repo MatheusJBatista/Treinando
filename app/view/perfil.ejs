@@ -180,7 +180,7 @@
                 <%}%>
               </div>
             </div>
-            <%if(result[0]._id == id && !autor){%>
+            <%if(result[0]._id == id && !autor && !result[0].autor.requisicao){%>
               <div class="d-flex justify-content-center">
                 <div>
                   <button class="btn btn-secundary text text-dark" data-toggle="modal" data-target="#queroSerAutor">

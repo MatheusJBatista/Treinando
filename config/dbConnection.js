@@ -7,7 +7,7 @@ const url = "mongodb+srv://matheusBatista:6FBc0jCRWRZdcNgL@matheusnoticia-bwmln.
 const dbName = "portalNoticia";
 
 var conexao = function(dados){
-  mongo.connect(url,function(err,client){
+  mongo.connect(url,{useNewUrlParser: true},function(err,client){
     assert.equal(null,err);
     // console.log("Conectado com sucesso");
     const db = client.db(dbName);
@@ -28,6 +28,11 @@ function query(db,dados){
         break;
     case "findAll":
         collection.find({}).toArray(dados.callback);
+        break;
+    case "findByDataFimNull":
+        collection.find({
+          dataFim: null
+        }).toArray(dados.callback);
         break;
     case "findByLogin":
         collection.find({
@@ -105,6 +110,44 @@ function query(db,dados){
             dados.callback
         )
         break;
+    case "updateRequisicaoById":
+        collection.findOneAndUpdate(
+          {
+            _id : new ObjectId(dados.query._id)
+          },
+            {$set:{
+              'autor.requisicao':true
+            }},
+            { rating: 1 },
+            dados.callback
+        )
+        break;
+    case "updateUsuarioAutorById":
+    console.log(dados.query.autor.autorizado);
+        collection.findOneAndUpdate(
+          {
+            _id: new ObjectId(dados.query._id)
+          },
+          {
+              $set:{
+                'autor.requisicao': true,
+                'autor.autorizado': dados.query.autor.autorizado
+              }
+          },
+          { rating: 1 },
+        dados.callback);break;
+    case "updateDataFim":
+        collection.findOneAndUpdate(
+          {
+            _id: new ObjectId(dados.query._id)
+          },
+          {
+              $set:{
+                dataFim:dados.query.dataFim
+              }
+          },
+          { rating: 1 },
+        dados.callback);break;
     case "validarEmail":
         collection.findOneAndUpdate(
           {
