@@ -3,7 +3,11 @@ var ObjectId = require("mongodb").ObjectId;
 var assert = require("assert");
 var crypto = require("crypto");
 
-const url = "mongodb+srv://matheusBatista:6FBc0jCRWRZdcNgL@matheusnoticia-bwmln.mongodb.net/test?retryWrites=true";
+var url = "mongodb://matheusBatista:6FBc0jCRWRZdcNgL@matheusnoticia-shard-00-00-bwmln.mongodb.net:27017,";
+url+="matheusnoticia-shard-00-01-bwmln.mongodb.net:27017,";
+url+="matheusnoticia-shard-00-02-bwmln.mongodb.net:27017/test?ssl=true&replicaSet=matheusNoticia-shard-0&authSource=admin&retryWrites=true";
+
+// const url = "mongodb+srv://matheusBatista:6FBc0jCRWRZdcNgL@matheusnoticia-bwmln.mongodb.net/test?retryWrites=true";
 const dbName = "portalNoticia";
 
 var conexao = function(dados){
@@ -105,6 +109,32 @@ function query(db,dados){
             {$set:{
               dataNascimento: dados.query.dataNascimento,
               nome: dados.query.nome
+            }},
+            { rating: 1 },
+            dados.callback
+        )
+        break;
+    case "updateNovaSenha":
+        collection.findOneAndUpdate(
+          {
+            _id : new ObjectId(dados.query._id),
+            senha : crypto.createHash("md5").update(dados.query.senha).digest("hex")
+          },
+            {$set:{
+              senha: crypto.createHash("md5").update(dados.query.novaSenha).digest("hex")
+            }},
+            { rating: 1 },
+            dados.callback
+        )
+        break;
+    case "updateNovoEmail":
+        collection.findOneAndUpdate(
+          {
+            _id : new ObjectId(dados.query._id),
+            email : dados.query.email
+          },
+            {$set:{
+              email : dados.query.novoEmail
             }},
             { rating: 1 },
             dados.callback

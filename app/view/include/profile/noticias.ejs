@@ -1,0 +1,58 @@
+<%if(queryPagina > 1) {%>
+    <% var i = 4 * (queryPagina-1) %>
+    <% var maximoItem = 4 * queryPagina %>
+    <% for(i; i < findNoticias.length && i < maximoItem;i++) {%>
+      <div class="col-sm-6">
+        <div class="card text-white bg-dark mb-3" style="max-width: 18rem;margin-top:10px;margin-left:5px">
+          <div class="card-header">Titulo da noticia: <a href="/noticia?artigo=<%=findNoticias[i]._id%>"><%=findNoticias[i].tituloPuro%></a></div>
+          <div class="card-body">
+            <h5 class="card-title">Sinopse:</h5>
+            <p class="card-text"><%=findNoticias[i].sinopsePuro%></p>
+          </div>
+        </div>
+      </div>
+      <%}%>
+  <%}else{%>
+    <% for(var i=0; i < findNoticias.length && i < 4;i++) {%>
+      <div class="col-sm-6">
+        <div class="card text-white bg-dark mb-3" style="max-width: 18rem;margin-top:10px;margin-left:5px">
+          <div class="card-header">Titulo da noticia: <a href="/noticia?artigo=<%=findNoticias[i]._id%>"><%=findNoticias[i].tituloPuro%></a></div>
+          <div class="card-body">
+            <h5 class="card-title">Sinopse:</h5>
+            <p class="card-text"><%=findNoticias[i].sinopsePuro%></p>
+          </div>
+        </div>
+      </div>
+    <%}%>
+  <%}%>
+<%}else{%>
+  <%if(pagina == 'config'){%>
+    <div class="col-sm-4">
+      <form action="">
+        <label for="" class="text text-white">Senha antiga:</label>
+        <input type="password" name="senhaAntiga" value="" class="form-control">
+        <label for="" class="text text-white">Nova senha:</label>
+        <input type="password" name="senhaNova" value="" class="form-control">
+        <button type="submit" class="btn btn text text-dark" name="btnSenha">Trocar senha</button>
+      </form>
+    </div>
+    <div class="col-sm-4">
+      <form action="">
+        <label for="" class="text text-white">E-mail antigo:</label>
+        <input type="email" name="senhaAntiga" value="" class="form-control">
+        <label for="" class="text text-white">Novo E-mail:</label>
+        <input type="email" name="senhaNova" value="" class="form-control">
+        <button type="submit" class="btn btn text text-dark" name="btnEmail">Trocar email</button>
+      </form>
+    </div>
+    <div class="col-sm-4">
+      <form action="">
+        <label for="" class="text text-white">Username antigo:</label>
+        <input type="password" name="senhaAntiga" value="" class="form-control">
+        <label for="" class="text text-white">Novo username:</label>
+        <input type="password" name="senhaNova" value="" class="form-control">
+        <button type="submit" class="btn btn text text-dark" name="btnNick">Trocar username</button>
+      </form>
+    </div>
+  <%}%>
+<%}%>

@@ -1,0 +1,12 @@
+<% if(erro) {%>
+<div class="alert alert-danger">
+    <strong>Atenção</strong>
+    <ul>
+        <% for(var i = 0; i< erro.length; i++){%>
+          <li>
+            <%= erro[i].msg%>
+          </li>
+        <%}%>
+    </ul>
+  </div>
+<%}%>

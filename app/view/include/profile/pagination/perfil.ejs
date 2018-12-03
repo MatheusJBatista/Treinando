@@ -1,0 +1,24 @@
+<nav>
+    <ul class="pagination pg-dark justify-content-end">
+      <!--Arrow left-->
+      <li class="page-item active">
+        <a class="page-link" aria-label="Previous" href="?paginacao=">
+          <span aria-hidden="true">&laquo;</span>
+          <span class="sr-only">Previous</span>
+        </a>
+      </li>
+      <%for(var paginacao = 1; paginacao <= numPaginas ; paginacao++){%>
+        <% var estilo = "" %>
+        <% if(queryPagina == paginacao) {estilo="active"}%>
+        <li class="page-item text text-white <%=estilo%>"><a class="page-link" href="?paginacao=<%=paginacao%>"><%=paginacao%></a></li>
+      <%}%>
+
+      <!--Arrow right-->
+      <li class="page-item active">
+        <a class="page-link" aria-label="Next" href="?paginacao=">
+          <span aria-hidden="true">&raquo;</span>
+          <span class="sr-only">Next</span>
+        </a>
+      </li>
+    </ul>
+  </nav>

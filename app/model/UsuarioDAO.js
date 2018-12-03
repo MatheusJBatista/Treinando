@@ -17,6 +17,18 @@ UsuarioDAO.prototype.validarEmail = function(callback){
   dados.callback = callback;
   this._conexao(dados);
 }
+UsuarioDAO.prototype.updateNovoEmail = function(novoEmail,callback){
+  var dados = this.getDados();
+  dados.callback = callback;
+  dados.novoEmail = novoEmail;
+  this._conexao(dados);
+}
+UsuarioDAO.prototype.updateNovaSenha = function(novaSenha,callback){
+  var dados = this.getDados();
+  dados.callback = callback;
+  dados.query.novaSenha = novaSenha;
+  this._conexao(dados);
+}
 
 UsuarioDAO.prototype.updateUsuarioAutorById = function(callback){
   var dados = this.getDados();

@@ -1,0 +1,29 @@
+<%if(comentarios){%>
+    <%if(queryPagina > 1) {%>
+      <% var i = 4 * (queryPagina-1) %>
+      <% var maximoItem = 4 * queryPagina %>
+      <% for(i; i < comentarios.length && i < maximoItem;i++) {%>
+        <div class="col-sm-6">
+          <div class="card text-white bg-dark mb-3" style="max-width: 18rem;margin-top:10px;margin-left:5px">
+            <div class="card-header">Titulo da noticia: <a href="/noticia?artigo=<%=comentarios[i].noticia.id_noticia%>"><%=comentarios[i].noticia.titulo%></a></div>
+            <div class="card-body">
+              <h5 class="card-title">Comentario:</h5>
+              <p class="card-text"><%=comentarios[i].comentario%></p>
+            </div>
+          </div>
+        </div>
+        <%}%>
+    <%}else{%>
+      <% for(var i=0; i < comentarios.length && i < 4;i++) {%>
+        <div class="col-sm-6">
+          <div class="card text-white bg-dark mb-3" style="max-width: 18rem;margin-top:10px;margin-left:5px">
+            <div class="card-header">Titulo da noticia: <a href="/noticia?artigo=<%=comentarios[i].noticia.id_noticia%>"><%=comentarios[i].noticia.titulo%></a></div>
+            <div class="card-body">
+              <h5 class="card-title">Comentario:</h5>
+              <p class="card-text"><%=comentarios[i].comentario%></p>
+            </div>
+          </div>
+        </div>
+      <%}%>
+    <%}%>
+  <%}%>

@@ -141,6 +141,7 @@
       <%}else{%>
         <% estilo="margin-top:16px"%>
       <%}%>
+      <%include include/erros%>
       <div class="col-sm-12 texture" style="<%=estilo%>;background-image: url('http://wallpoper.com/images/00/31/33/51/black-background_00313351.jpg');margin-bottom:16px">
         <div class="row">
           <div class="col-sm-4" style="border:0 solid #a166f9">
@@ -252,9 +253,9 @@
                   <%}%>
                 <%}%>
               <%}else{%>
-                <%if(pagina == 'config'){%>
+                <%if(pagina == 'config' && result[0]._id == id){%>
                   <div class="col-sm-4">
-                    <form action="">
+                    <form action="/profile/<%=result[0].username%>/config" method="POST">
                       <label for="" class="text text-white">Senha antiga:</label>
                       <input type="password" name="senhaAntiga" value="" class="form-control">
                       <label for="" class="text text-white">Nova senha:</label>
@@ -263,22 +264,13 @@
                     </form>
                   </div>
                   <div class="col-sm-4">
-                    <form action="">
+                    <!-- <form action="/profile//config" method="POST">
                       <label for="" class="text text-white">E-mail antigo:</label>
-                      <input type="email" name="senhaAntiga" value="" class="form-control">
+                      <input type="email" name="emailAntigo" value="" class="form-control">
                       <label for="" class="text text-white">Novo E-mail:</label>
-                      <input type="email" name="senhaNova" value="" class="form-control">
+                      <input type="email" name="emailNovo" value="" class="form-control">
                       <button type="submit" class="btn btn text text-dark" name="btnEmail">Trocar email</button>
-                    </form>
-                  </div>
-                  <div class="col-sm-4">
-                    <form action="">
-                      <label for="" class="text text-white">Username antigo:</label>
-                      <input type="password" name="senhaAntiga" value="" class="form-control">
-                      <label for="" class="text text-white">Novo username:</label>
-                      <input type="password" name="senhaNova" value="" class="form-control">
-                      <button type="submit" class="btn btn text text-dark" name="btnNick">Trocar username</button>
-                    </form>
+                    </form> -->
                   </div>
                 <%}%>
               <%}%>
@@ -341,18 +333,5 @@
       </div>
     </div>
     </div>
-    <script type="text/javascript">
-    $(document).ready(function () {
-      if('<%=pagina%>' == "perfil"){
-        $.ajax({
-          method: "GET",
-          url: "/noticia/comentario?usuario="+'<%= result[0]._id %>'
-        })
-        .done(function (findAll) {
-          console.log(findAll);
-        })
-      }
-    });
-    </script>
   </body>
 </html>
